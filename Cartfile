@@ -1,0 +1,5 @@
+github "kAzec/Atomic"
+
+# Tests
+github "Quick/Nimble"
+github "Quick/Quick"
