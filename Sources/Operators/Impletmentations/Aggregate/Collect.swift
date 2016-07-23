@@ -30,7 +30,7 @@ final class CollectCount<T>: ValueCustomOperator<T, [T]> {
     private var countCollected = 0
     private var collected = [T]()
     
-    init(count: Int) {
+    init(_ count: Int) {
         precondition(count > 0)
         
         countLimit = count

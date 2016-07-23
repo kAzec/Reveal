@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 public final class Node<Value>: IntermediateType {
     public typealias Element = Value

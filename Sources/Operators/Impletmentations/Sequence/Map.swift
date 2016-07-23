@@ -11,7 +11,7 @@ import Foundation
 final class Map<I, O>: ValueDefaultOperator<I, O> {
     let transform: I -> O
     
-    init(_ transform: I -> O) {
+    init(transform: I -> O) {
         self.transform = transform
     }
     
@@ -20,8 +20,4 @@ final class Map<I, O>: ValueDefaultOperator<I, O> {
             sink(self.transform(value))
         }
     }
-}
-
-public func map<I, O>(transform: I -> O) -> ValueOperator<I, O> {
-    return Map(transform)
 }

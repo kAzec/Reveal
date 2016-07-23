@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 /// Bidirectional subscription.
 public final class Relationship<M1: IntermediateType, M2: IntermediateType>: Disposable {

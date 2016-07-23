@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 public struct Repository<Element> {
     typealias Action = Element -> Void

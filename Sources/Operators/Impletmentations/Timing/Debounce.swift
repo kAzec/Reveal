@@ -7,16 +7,15 @@
 //
 
 import Foundation
-import Atomic
 
 final class Debounce<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Scheduler> {
-    private let timeout: NSTimeInterval
+    private let interval: NSTimeInterval
     private var receivedBeforeTimeout = false
     private var forwardNeeded = true
     private let latest = Atomic<T?>(nil)
     
-    init(timeout: NSTimeInterval, scheduler: Scheduler) {
-        self.timeout = timeout
+    init(interval: NSTimeInterval, scheduler: Scheduler) {
+        self.interval = interval
         super.init(scheduler: scheduler)
     }
     
@@ -26,7 +25,7 @@ final class Debounce<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Sche
                 self.forwardNeeded = !self.receivedBeforeTimeout
                 self.receivedBeforeTimeout = true
                 
-                self.schedule(after: self.timeout) { [weak self] in
+                self.schedule(after: self.interval) { [weak self] in
                     guard let weakSelf = self else { return }
                     
                     if weakSelf.forwardNeeded {

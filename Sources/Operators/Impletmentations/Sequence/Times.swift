@@ -9,24 +9,24 @@
 import Foundation
 
 final class Times<T>: ValueDefaultOperator<T, T> {
-    private let count: Int
+    private let multiplier: Int
     
-    init(_ count: Int) {
-        precondition(count >= 0)
-        self.count = count
+    init(_ multiplier: Int) {
+        precondition(multiplier >= 0)
+        self.multiplier = multiplier
     }
     
     override func forward(sink: T -> Void) -> (T -> Void) {
-        guard count > 0 else {
+        guard multiplier > 0 else {
             return { [sink] _ in let _ = sink }
         }
         
-        guard count > 1 else {
+        guard multiplier > 1 else {
             return sink
         }
         
         return { value in
-            var remainingTimes = self.count
+            var remainingTimes = self.multiplier
             
             while remainingTimes > 0 {
                 remainingTimes -= 1

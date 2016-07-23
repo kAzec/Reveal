@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 public final class Stream<Value>: IntermediateType {
     public typealias Element = Reveal.Signal<Value>

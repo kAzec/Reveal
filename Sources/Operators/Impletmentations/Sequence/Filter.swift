@@ -11,7 +11,7 @@ import Foundation
 final class Filter<T>: ValueDefaultOperator<T, T> {
     private let includeValue: T -> Bool
     
-    init(includeValue: T -> Bool) {
+    init(_ includeValue: T -> Bool) {
         self.includeValue = includeValue
     }
     

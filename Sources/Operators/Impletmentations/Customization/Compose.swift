@@ -12,9 +12,9 @@ final class Compose<A, B, C>: ValueOperator<A, C> {
     private let o1: ValueOperator<A, B>
     private let o2: ValueOperator<B, C>
     
-    init(_ o1: ValueOperator<A, B>, _ o2: ValueOperator<B, C>) {
-        self.o1 = o1
-        self.o2 = o2
+    init(operator1: ValueOperator<A, B>, operator2: ValueOperator<B, C>) {
+        self.o1 = operator1
+        self.o2 = operator2
     }
     
     override func forward(sink: C -> Void) -> (A -> Void) {
@@ -28,8 +28,4 @@ final class Compose<A, B, C>: ValueOperator<A, C> {
     override func forwardResponse<E>(sink: Response<C, E>.Action) -> Response<A, E>.Action {
         return o1.forwardResponse(o2.forwardResponse(sink))
     }
-}
-
-func +<A, B, C>(rhs: ValueOperator<A, B>, lhs: ValueOperator<B, C>) -> Compose<A, B, C> {
-    return Compose(rhs, lhs)
 }

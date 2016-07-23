@@ -18,6 +18,7 @@ final class TakeCount<T>: ControlWithCount<T> {
         
         return { value in
             guard self.controlValue else { return }
+            
             self.increment()
             sink(value)
         }

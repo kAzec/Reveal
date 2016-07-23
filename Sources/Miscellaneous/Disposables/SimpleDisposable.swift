@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 final class SimpleDisposable: Disposable {
     var atomicDisposed = AtomicBool(false)

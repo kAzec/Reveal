@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 public final class Operation<Value, Error: ErrorType>: IntermediateType {
     public typealias Element = Reveal.Response<Value, Error>

@@ -13,7 +13,7 @@ final class CombinePrevious<T>: ValueCustomOperator<T, (previous: T, value: T)> 
     
     private var previous: T?
     
-    init(initial: T?) {
+    init(_ initial: T?) {
         previous = initial
     }
     

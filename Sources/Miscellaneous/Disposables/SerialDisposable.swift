@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 /// A disposable that will optionally dispose of another disposable.
 final class SerialDisposable: Disposable {

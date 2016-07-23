@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 final class SkipTime<Element, Scheduler: DelaySchedulerType>: ControlWithTime<Element, Scheduler> {
     private var shouldSkip: Bool {

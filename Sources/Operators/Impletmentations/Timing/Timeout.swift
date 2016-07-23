@@ -7,17 +7,16 @@
 //
 
 import Foundation
-import Atomic
 
 final class Timeout<T, Scheduler: DelaySchedulerType>: ValueDefaultOperator<T, T> {
-    private let dueTime: NSTimeInterval
+    private let interval: NSTimeInterval
     private let expectation: (T -> Bool)
     private let consequence: (Void -> Void)
     private let scheduler: Scheduler
     private let disposable = SerialDisposable()
     
-    init(dueTime: NSTimeInterval, scheduler: Scheduler, expectation: (T -> Bool), consequence: (Void -> Void)) {
-        self.dueTime = dueTime
+    init(interval: NSTimeInterval, scheduler: Scheduler, expectation: (T -> Bool), consequence: (Void -> Void)) {
+        self.interval = interval
         self.scheduler = scheduler
         self.expectation = expectation
         self.consequence = consequence
@@ -31,7 +30,7 @@ final class Timeout<T, Scheduler: DelaySchedulerType>: ValueDefaultOperator<T, T
         var didTimeout = AtomicBool(false)
         
         func scheduleNewTimeout() {
-            let scheduledDisposable = scheduler.schedule(after: dueTime) {
+            let scheduledDisposable = scheduler.schedule(after: interval) {
                 guard !didTimeout.swap(true) else { return }
                 
                 self.consequence()

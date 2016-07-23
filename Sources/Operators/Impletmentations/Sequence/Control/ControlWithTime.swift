@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 class ControlWithTime<T, Scheduler: DelaySchedulerType>: ValueCustomOperator<T, T> {
     let timeLimit: NSTimeInterval

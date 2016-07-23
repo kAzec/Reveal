@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 /// A scheduler backed by a serial GCD queue.
 public final class QueueScheduler: DateSchedulerType{

@@ -32,7 +32,7 @@
 		4C62A65A1D3AA2CA007F67BB /* SignalDefaultOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6261D3AA2CA007F67BB /* SignalDefaultOperator.swift */; };
 		4C62A65B1D3AA2CA007F67BB /* ValueCustomOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6271D3AA2CA007F67BB /* ValueCustomOperator.swift */; };
 		4C62A65C1D3AA2CA007F67BB /* ValueDefaultOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6281D3AA2CA007F67BB /* ValueDefaultOperator.swift */; };
-		4C62A65D1D3AA2CA007F67BB /* Operators+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operators+PipeOperator.swift */; };
+		4C62A65D1D3AA2CA007F67BB /* Operator+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operator+PipeOperator.swift */; };
 		4C62A65E1D3AA2CA007F67BB /* NodeProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A62B1D3AA2CA007F67BB /* NodeProducer.swift */; };
 		4C62A65F1D3AA2CA007F67BB /* ProcessProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A62C1D3AA2CA007F67BB /* ProcessProducer.swift */; };
 		4C62A6601D3AA2CA007F67BB /* StreamProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A62D1D3AA2CA007F67BB /* StreamProducer.swift */; };
@@ -51,27 +51,55 @@
 		4C62A6751D3AA2CA007F67BB /* IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6471D3AA2CA007F67BB /* IO.swift */; };
 		4C62A6761D3AA2CA007F67BB /* NoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6481D3AA2CA007F67BB /* NoError.swift */; };
 		4C62A6771D3AA2CA007F67BB /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6491D3AA2CA007F67BB /* Result.swift */; };
-		4C62A67A1D3AA2E9007F67BB /* Atomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C62A6791D3AA2E9007F67BB /* Atomic.framework */; };
-		4C62A67E1D3AA314007F67BB /* Atomic.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4C62A6791D3AA2E9007F67BB /* Atomic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C62A6811D3AA47A007F67BB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C62A67F1D3AA47A007F67BB /* Nimble.framework */; };
 		4C62A6821D3AA47A007F67BB /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C62A6801D3AA47A007F67BB /* Quick.framework */; };
 		4C62A6841D3AA495007F67BB /* Nimble.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4C62A67F1D3AA47A007F67BB /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C62A6851D3AA495007F67BB /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4C62A6801D3AA47A007F67BB /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C68B84E1D43C6C70068132B /* Operator+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84D1D43C6C70068132B /* Operator+Sequence.swift */; };
+		4C68B8501D43CA360068132B /* Operator+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84F1D43CA360068132B /* Operator+Customization.swift */; };
+		4C68B8511D43CA360068132B /* Operator+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84F1D43CA360068132B /* Operator+Customization.swift */; };
+		4C68B8521D43CA360068132B /* Operator+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84F1D43CA360068132B /* Operator+Customization.swift */; };
+		4C68B8531D43CA360068132B /* Operator+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84F1D43CA360068132B /* Operator+Customization.swift */; };
+		4C68B8541D43CA390068132B /* Operator+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84D1D43C6C70068132B /* Operator+Sequence.swift */; };
+		4C68B8551D43CA3A0068132B /* Operator+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84D1D43C6C70068132B /* Operator+Sequence.swift */; };
+		4C68B8561D43CA3A0068132B /* Operator+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B84D1D43C6C70068132B /* Operator+Sequence.swift */; };
+		4C68B8571D43CA9C0068132B /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
+		4C68B8581D43CA9D0068132B /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
+		4C68B8591D43CA9E0068132B /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
+		4C68B85A1D43CA9F0068132B /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
+		4C68B85C1D43E0FA0068132B /* Operator+Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B85B1D43E0FA0068132B /* Operator+Timing.swift */; };
+		4C68B85D1D43E0FA0068132B /* Operator+Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B85B1D43E0FA0068132B /* Operator+Timing.swift */; };
+		4C68B85E1D43E0FA0068132B /* Operator+Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B85B1D43E0FA0068132B /* Operator+Timing.swift */; };
+		4C68B85F1D43E0FA0068132B /* Operator+Timing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68B85B1D43E0FA0068132B /* Operator+Timing.swift */; };
 		4C6CB8451D4073AE009DA8A1 /* Reveal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C62A5FA1D3AA282007F67BB /* Reveal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6CB8461D4073B4009DA8A1 /* Reveal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C62A5FA1D3AA282007F67BB /* Reveal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6CB8471D4073BC009DA8A1 /* Reveal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C62A5FA1D3AA282007F67BB /* Reveal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B48531D407D0800A7958A /* Atomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7B48521D407D0800A7958A /* Atomic.framework */; };
-		4C7B48551D407D2A00A7958A /* Atomic.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7B48521D407D0800A7958A /* Atomic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C7B48581D407D4800A7958A /* Atomic.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7B48571D407D4800A7958A /* Atomic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C6E21591D43E56F007A6D47 /* Operator+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21581D43E56F007A6D47 /* Operator+Error.swift */; };
+		4C6E215A1D43E56F007A6D47 /* Operator+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21581D43E56F007A6D47 /* Operator+Error.swift */; };
+		4C6E215B1D43E56F007A6D47 /* Operator+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21581D43E56F007A6D47 /* Operator+Error.swift */; };
+		4C6E215C1D43E56F007A6D47 /* Operator+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21581D43E56F007A6D47 /* Operator+Error.swift */; };
+		4C6E215E1D43E5D7007A6D47 /* Operator+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E215D1D43E5D7007A6D47 /* Operator+Async.swift */; };
+		4C6E215F1D43E5D7007A6D47 /* Operator+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E215D1D43E5D7007A6D47 /* Operator+Async.swift */; };
+		4C6E21601D43E5D7007A6D47 /* Operator+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E215D1D43E5D7007A6D47 /* Operator+Async.swift */; };
+		4C6E21611D43E5D7007A6D47 /* Operator+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E215D1D43E5D7007A6D47 /* Operator+Async.swift */; };
+		4C6E21631D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21621D43E60E007A6D47 /* Operator+Aggregate.swift */; };
+		4C6E21641D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21621D43E60E007A6D47 /* Operator+Aggregate.swift */; };
+		4C6E21651D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21621D43E60E007A6D47 /* Operator+Aggregate.swift */; };
+		4C6E21661D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21621D43E60E007A6D47 /* Operator+Aggregate.swift */; };
+		4C6E21691D43EB72007A6D47 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21671D43EB72007A6D47 /* Atomic.swift */; };
+		4C6E216A1D43EB72007A6D47 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21671D43EB72007A6D47 /* Atomic.swift */; };
+		4C6E216B1D43EB72007A6D47 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21671D43EB72007A6D47 /* Atomic.swift */; };
+		4C6E216C1D43EB72007A6D47 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21671D43EB72007A6D47 /* Atomic.swift */; };
+		4C6E216D1D43EB72007A6D47 /* AtomicBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21681D43EB72007A6D47 /* AtomicBool.swift */; };
+		4C6E216E1D43EB72007A6D47 /* AtomicBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21681D43EB72007A6D47 /* AtomicBool.swift */; };
+		4C6E216F1D43EB72007A6D47 /* AtomicBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21681D43EB72007A6D47 /* AtomicBool.swift */; };
+		4C6E21701D43EB72007A6D47 /* AtomicBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6E21681D43EB72007A6D47 /* AtomicBool.swift */; };
 		4C8AF0AB1D3D2BBC00BD3E84 /* NodeProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0A81D3D2BBC00BD3E84 /* NodeProxy.swift */; };
 		4C8AF0AC1D3D2BBC00BD3E84 /* OperationProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0A91D3D2BBC00BD3E84 /* OperationProxy.swift */; };
 		4C8AF0AD1D3D2BBC00BD3E84 /* StreamProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0AA1D3D2BBC00BD3E84 /* StreamProxy.swift */; };
 		4C8AF0AF1D3D2BC500BD3E84 /* ProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0AE1D3D2BC500BD3E84 /* ProxyType.swift */; };
 		4C8AF0B11D3D304D00BD3E84 /* TryMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0B01D3D304D00BD3E84 /* TryMap.swift */; };
 		4C8AF0B41D3D30F300BD3E84 /* MapError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0B31D3D30F300BD3E84 /* MapError.swift */; };
-		4C9A8DCE1D407D87009CBAAC /* Atomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7B48571D407D4800A7958A /* Atomic.framework */; };
-		4C9A8DD21D407DC9009CBAAC /* Atomic.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9A8DD11D407DC9009CBAAC /* Atomic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C9A8DD31D407DD5009CBAAC /* Atomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9A8DD11D407DC9009CBAAC /* Atomic.framework */; };
 		4C9A8DD41D407DFA009CBAAC /* SourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6361D3AA2CA007F67BB /* SourceType.swift */; };
 		4C9A8DD51D407DFA009CBAAC /* SinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6351D3AA2CA007F67BB /* SinkType.swift */; };
 		4C9A8DD61D407DFA009CBAAC /* IntermediateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6311D3AA2CA007F67BB /* IntermediateType.swift */; };
@@ -141,9 +169,9 @@
 		4C9A8E161D407E67009CBAAC /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A63D1D3AA2CA007F67BB /* Subscription.swift */; };
 		4C9A8E171D407E68009CBAAC /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A63C1D3AA2CA007F67BB /* Relationship.swift */; };
 		4C9A8E181D407E68009CBAAC /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A63D1D3AA2CA007F67BB /* Subscription.swift */; };
-		4C9A8E191D407E6E009CBAAC /* Operators+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operators+PipeOperator.swift */; };
-		4C9A8E1A1D407E6F009CBAAC /* Operators+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operators+PipeOperator.swift */; };
-		4C9A8E1B1D407E6F009CBAAC /* Operators+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operators+PipeOperator.swift */; };
+		4C9A8E191D407E6E009CBAAC /* Operator+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operator+PipeOperator.swift */; };
+		4C9A8E1A1D407E6F009CBAAC /* Operator+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operator+PipeOperator.swift */; };
+		4C9A8E1B1D407E6F009CBAAC /* Operator+PipeOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6291D3AA2CA007F67BB /* Operator+PipeOperator.swift */; };
 		4C9A8E1C1D407E75009CBAAC /* ResponseOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6221D3AA2CA007F67BB /* ResponseOperator.swift */; };
 		4C9A8E1D1D407E75009CBAAC /* SignalCustomOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6251D3AA2CA007F67BB /* SignalCustomOperator.swift */; };
 		4C9A8E1E1D407E75009CBAAC /* SignalDefaultOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62A6261D3AA2CA007F67BB /* SignalDefaultOperator.swift */; };
@@ -193,14 +221,13 @@
 		4C9A8E4A1D407E99009CBAAC /* TryMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0B01D3D304D00BD3E84 /* TryMap.swift */; };
 		4C9A8E4B1D407E99009CBAAC /* MapError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF0B31D3D30F300BD3E84 /* MapError.swift */; };
 		4C9A8E4C1D407E9F009CBAAC /* CombinePrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C71D3B90D2002D34B7 /* CombinePrevious.swift */; };
-		4C9A8E4D1D407E9F009CBAAC /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
 		4C9A8E4E1D407E9F009CBAAC /* Distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C91D3B90D2002D34B7 /* Distinct.swift */; };
 		4C9A8E4F1D407E9F009CBAAC /* DistinctLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CA1D3B90D2002D34B7 /* DistinctLatest.swift */; };
 		4C9A8E501D407E9F009CBAAC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CB1D3B90D2002D34B7 /* Filter.swift */; };
 		4C9A8E511D407E9F009CBAAC /* IgnoreNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CC1D3B90D2002D34B7 /* IgnoreNil.swift */; };
 		4C9A8E521D407E9F009CBAAC /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CD1D3B90D2002D34B7 /* Index.swift */; };
 		4C9A8E531D407E9F009CBAAC /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63AE1D3B82D7002D34B7 /* Map.swift */; };
-		4C9A8E541D407E9F009CBAAC /* SampleOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleOn.swift */; };
+		4C9A8E541D407E9F009CBAAC /* SampleWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleWith.swift */; };
 		4C9A8E551D407E9F009CBAAC /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CF1D3B90D2002D34B7 /* Scan.swift */; };
 		4C9A8E561D407E9F009CBAAC /* SkipCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D01D3B90D2002D34B7 /* SkipCount.swift */; };
 		4C9A8E571D407E9F009CBAAC /* SkipTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D11D3B90D2002D34B7 /* SkipTime.swift */; };
@@ -213,14 +240,13 @@
 		4C9A8E5E1D407E9F009CBAAC /* TakeWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D81D3B90D2002D34B7 /* TakeWhile.swift */; };
 		4C9A8E5F1D407E9F009CBAAC /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D91D3B90D2002D34B7 /* Times.swift */; };
 		4C9A8E601D407EA0009CBAAC /* CombinePrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C71D3B90D2002D34B7 /* CombinePrevious.swift */; };
-		4C9A8E611D407EA0009CBAAC /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
 		4C9A8E621D407EA0009CBAAC /* Distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C91D3B90D2002D34B7 /* Distinct.swift */; };
 		4C9A8E631D407EA0009CBAAC /* DistinctLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CA1D3B90D2002D34B7 /* DistinctLatest.swift */; };
 		4C9A8E641D407EA0009CBAAC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CB1D3B90D2002D34B7 /* Filter.swift */; };
 		4C9A8E651D407EA0009CBAAC /* IgnoreNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CC1D3B90D2002D34B7 /* IgnoreNil.swift */; };
 		4C9A8E661D407EA0009CBAAC /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CD1D3B90D2002D34B7 /* Index.swift */; };
 		4C9A8E671D407EA0009CBAAC /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63AE1D3B82D7002D34B7 /* Map.swift */; };
-		4C9A8E681D407EA0009CBAAC /* SampleOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleOn.swift */; };
+		4C9A8E681D407EA0009CBAAC /* SampleWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleWith.swift */; };
 		4C9A8E691D407EA0009CBAAC /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CF1D3B90D2002D34B7 /* Scan.swift */; };
 		4C9A8E6A1D407EA0009CBAAC /* SkipCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D01D3B90D2002D34B7 /* SkipCount.swift */; };
 		4C9A8E6B1D407EA0009CBAAC /* SkipTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D11D3B90D2002D34B7 /* SkipTime.swift */; };
@@ -233,14 +259,13 @@
 		4C9A8E721D407EA0009CBAAC /* TakeWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D81D3B90D2002D34B7 /* TakeWhile.swift */; };
 		4C9A8E731D407EA0009CBAAC /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D91D3B90D2002D34B7 /* Times.swift */; };
 		4C9A8E741D407EA0009CBAAC /* CombinePrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C71D3B90D2002D34B7 /* CombinePrevious.swift */; };
-		4C9A8E751D407EA0009CBAAC /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
 		4C9A8E761D407EA0009CBAAC /* Distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C91D3B90D2002D34B7 /* Distinct.swift */; };
 		4C9A8E771D407EA0009CBAAC /* DistinctLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CA1D3B90D2002D34B7 /* DistinctLatest.swift */; };
 		4C9A8E781D407EA0009CBAAC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CB1D3B90D2002D34B7 /* Filter.swift */; };
 		4C9A8E791D407EA0009CBAAC /* IgnoreNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CC1D3B90D2002D34B7 /* IgnoreNil.swift */; };
 		4C9A8E7A1D407EA0009CBAAC /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CD1D3B90D2002D34B7 /* Index.swift */; };
 		4C9A8E7B1D407EA0009CBAAC /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63AE1D3B82D7002D34B7 /* Map.swift */; };
-		4C9A8E7C1D407EA0009CBAAC /* SampleOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleOn.swift */; };
+		4C9A8E7C1D407EA0009CBAAC /* SampleWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleWith.swift */; };
 		4C9A8E7D1D407EA0009CBAAC /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CF1D3B90D2002D34B7 /* Scan.swift */; };
 		4C9A8E7E1D407EA0009CBAAC /* SkipCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D01D3B90D2002D34B7 /* SkipCount.swift */; };
 		4C9A8E7F1D407EA0009CBAAC /* SkipTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D11D3B90D2002D34B7 /* SkipTime.swift */; };
@@ -342,13 +367,12 @@
 		4CEC63C41D3B8EC2002D34B7 /* SchedulerTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C01D3B8EC2002D34B7 /* SchedulerTypes.swift */; };
 		4CEC63C51D3B8EC2002D34B7 /* UIScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C11D3B8EC2002D34B7 /* UIScheduler.swift */; };
 		4CEC63DA1D3B90D2002D34B7 /* CombinePrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C71D3B90D2002D34B7 /* CombinePrevious.swift */; };
-		4CEC63DB1D3B90D2002D34B7 /* Compose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C81D3B90D2002D34B7 /* Compose.swift */; };
 		4CEC63DC1D3B90D2002D34B7 /* Distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63C91D3B90D2002D34B7 /* Distinct.swift */; };
 		4CEC63DD1D3B90D2002D34B7 /* DistinctLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CA1D3B90D2002D34B7 /* DistinctLatest.swift */; };
 		4CEC63DE1D3B90D2002D34B7 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CB1D3B90D2002D34B7 /* Filter.swift */; };
 		4CEC63DF1D3B90D2002D34B7 /* IgnoreNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CC1D3B90D2002D34B7 /* IgnoreNil.swift */; };
 		4CEC63E01D3B90D2002D34B7 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CD1D3B90D2002D34B7 /* Index.swift */; };
-		4CEC63E11D3B90D2002D34B7 /* SampleOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleOn.swift */; };
+		4CEC63E11D3B90D2002D34B7 /* SampleWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CE1D3B90D2002D34B7 /* SampleWith.swift */; };
 		4CEC63E21D3B90D2002D34B7 /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63CF1D3B90D2002D34B7 /* Scan.swift */; };
 		4CEC63E31D3B90D2002D34B7 /* SkipCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D01D3B90D2002D34B7 /* SkipCount.swift */; };
 		4CEC63E41D3B90D2002D34B7 /* SkipTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC63D11D3B90D2002D34B7 /* SkipTime.swift */; };
@@ -382,17 +406,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4C62A67D1D3AA308007F67BB /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4C62A67E1D3AA314007F67BB /* Atomic.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4C62A6831D3AA483007F67BB /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -401,39 +414,6 @@
 			files = (
 				4C62A6841D3AA495007F67BB /* Nimble.framework in Copy Frameworks */,
 				4C62A6851D3AA495007F67BB /* Quick.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4C7B48541D407D0F00A7958A /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4C7B48551D407D2A00A7958A /* Atomic.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4C7B48561D407D3600A7958A /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4C7B48581D407D4800A7958A /* Atomic.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4C9A8DD01D407D93009CBAAC /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4C9A8DD21D407DC9009CBAAC /* Atomic.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,7 +449,7 @@
 		4C62A6261D3AA2CA007F67BB /* SignalDefaultOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalDefaultOperator.swift; sourceTree = "<group>"; };
 		4C62A6271D3AA2CA007F67BB /* ValueCustomOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueCustomOperator.swift; sourceTree = "<group>"; };
 		4C62A6281D3AA2CA007F67BB /* ValueDefaultOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueDefaultOperator.swift; sourceTree = "<group>"; };
-		4C62A6291D3AA2CA007F67BB /* Operators+PipeOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operators+PipeOperator.swift"; sourceTree = "<group>"; };
+		4C62A6291D3AA2CA007F67BB /* Operator+PipeOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+PipeOperator.swift"; sourceTree = "<group>"; };
 		4C62A62B1D3AA2CA007F67BB /* NodeProducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeProducer.swift; sourceTree = "<group>"; };
 		4C62A62C1D3AA2CA007F67BB /* ProcessProducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessProducer.swift; sourceTree = "<group>"; };
 		4C62A62D1D3AA2CA007F67BB /* StreamProducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamProducer.swift; sourceTree = "<group>"; };
@@ -491,9 +471,17 @@
 		4C62A6791D3AA2E9007F67BB /* Atomic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Atomic.framework; path = Carthage/Build/Mac/Atomic.framework; sourceTree = "<group>"; };
 		4C62A67F1D3AA47A007F67BB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		4C62A6801D3AA47A007F67BB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
+		4C68B84D1D43C6C70068132B /* Operator+Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+Sequence.swift"; sourceTree = "<group>"; };
+		4C68B84F1D43CA360068132B /* Operator+Customization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+Customization.swift"; sourceTree = "<group>"; };
+		4C68B85B1D43E0FA0068132B /* Operator+Timing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+Timing.swift"; sourceTree = "<group>"; };
 		4C6CB8201D407278009DA8A1 /* Reveal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reveal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6CB82D1D407299009DA8A1 /* Reveal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reveal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6CB83A1D4072A5009DA8A1 /* Reveal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reveal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C6E21581D43E56F007A6D47 /* Operator+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+Error.swift"; sourceTree = "<group>"; };
+		4C6E215D1D43E5D7007A6D47 /* Operator+Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+Async.swift"; sourceTree = "<group>"; };
+		4C6E21621D43E60E007A6D47 /* Operator+Aggregate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator+Aggregate.swift"; sourceTree = "<group>"; };
+		4C6E21671D43EB72007A6D47 /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		4C6E21681D43EB72007A6D47 /* AtomicBool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicBool.swift; sourceTree = "<group>"; };
 		4C7B48521D407D0800A7958A /* Atomic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Atomic.framework; path = Carthage/Build/iOS/Atomic.framework; sourceTree = "<group>"; };
 		4C7B48571D407D4800A7958A /* Atomic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Atomic.framework; path = Carthage/Build/watchOS/Atomic.framework; sourceTree = "<group>"; };
 		4C8AF0A81D3D2BBC00BD3E84 /* NodeProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeProxy.swift; sourceTree = "<group>"; };
@@ -521,7 +509,7 @@
 		4CEC63CB1D3B90D2002D34B7 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		4CEC63CC1D3B90D2002D34B7 /* IgnoreNil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreNil.swift; sourceTree = "<group>"; };
 		4CEC63CD1D3B90D2002D34B7 /* Index.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
-		4CEC63CE1D3B90D2002D34B7 /* SampleOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleOn.swift; sourceTree = "<group>"; };
+		4CEC63CE1D3B90D2002D34B7 /* SampleWith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleWith.swift; sourceTree = "<group>"; };
 		4CEC63CF1D3B90D2002D34B7 /* Scan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scan.swift; sourceTree = "<group>"; };
 		4CEC63D01D3B90D2002D34B7 /* SkipCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipCount.swift; sourceTree = "<group>"; };
 		4CEC63D11D3B90D2002D34B7 /* SkipTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipTime.swift; sourceTree = "<group>"; };
@@ -549,7 +537,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C62A67A1D3AA2E9007F67BB /* Atomic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +554,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C7B48531D407D0800A7958A /* Atomic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,7 +561,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C9A8DCE1D407D87009CBAAC /* Atomic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,7 +568,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C9A8DD31D407DD5009CBAAC /* Atomic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,9 +599,10 @@
 		4C2157131D3CD939000503A6 /* Customization */ = {
 			isa = PBXGroup;
 			children = (
-				4C2157161D3CDA3F000503A6 /* CustomizeResponse.swift */,
-				4C2157141D3CD9B3000503A6 /* CustomizeSignal.swift */,
+				4CEC63C81D3B90D2002D34B7 /* Compose.swift */,
 				4C2157111D3CD935000503A6 /* CustomizeValue.swift */,
+				4C2157141D3CD9B3000503A6 /* CustomizeSignal.swift */,
+				4C2157161D3CDA3F000503A6 /* CustomizeResponse.swift */,
 			);
 			path = Customization;
 			sourceTree = "<group>";
@@ -788,6 +773,8 @@
 			children = (
 				4C62A63E1D3AA2CA007F67BB /* Disposables */,
 				4CEC63C61D3B8EC7002D34B7 /* Schedulers */,
+				4C6E21671D43EB72007A6D47 /* Atomic.swift */,
+				4C6E21681D43EB72007A6D47 /* AtomicBool.swift */,
 				4C62A6451D3AA2CA007F67BB /* Bag.swift */,
 				4CEC63FE1D3BA554002D34B7 /* Box.swift */,
 				4C62A6461D3AA2CA007F67BB /* Functions.swift */,
@@ -802,7 +789,13 @@
 		4C62A64A1D3AA2CA007F67BB /* Operators */ = {
 			isa = PBXGroup;
 			children = (
-				4C62A6291D3AA2CA007F67BB /* Operators+PipeOperator.swift */,
+				4C62A6291D3AA2CA007F67BB /* Operator+PipeOperator.swift */,
+				4C6E21621D43E60E007A6D47 /* Operator+Aggregate.swift */,
+				4C6E215D1D43E5D7007A6D47 /* Operator+Async.swift */,
+				4C68B84F1D43CA360068132B /* Operator+Customization.swift */,
+				4C6E21581D43E56F007A6D47 /* Operator+Error.swift */,
+				4C68B84D1D43C6C70068132B /* Operator+Sequence.swift */,
+				4C68B85B1D43E0FA0068132B /* Operator+Timing.swift */,
 				4C62A6201D3AA2CA007F67BB /* Prototypes */,
 				4CEC63B01D3B84D8002D34B7 /* Impletmentations */,
 			);
@@ -814,24 +807,23 @@
 			children = (
 				4CEC63BD1D3B8C08002D34B7 /* Control */,
 				4CEC63C71D3B90D2002D34B7 /* CombinePrevious.swift */,
-				4CEC63C81D3B90D2002D34B7 /* Compose.swift */,
 				4CEC63C91D3B90D2002D34B7 /* Distinct.swift */,
 				4CEC63CA1D3B90D2002D34B7 /* DistinctLatest.swift */,
 				4CEC63CB1D3B90D2002D34B7 /* Filter.swift */,
 				4CEC63CC1D3B90D2002D34B7 /* IgnoreNil.swift */,
 				4CEC63CD1D3B90D2002D34B7 /* Index.swift */,
 				4CEC63AE1D3B82D7002D34B7 /* Map.swift */,
-				4CEC63CE1D3B90D2002D34B7 /* SampleOn.swift */,
+				4CEC63CE1D3B90D2002D34B7 /* SampleWith.swift */,
 				4CEC63CF1D3B90D2002D34B7 /* Scan.swift */,
 				4CEC63D01D3B90D2002D34B7 /* SkipCount.swift */,
 				4CEC63D11D3B90D2002D34B7 /* SkipTime.swift */,
 				4CEC63D21D3B90D2002D34B7 /* SkipUntil.swift */,
 				4CEC63D31D3B90D2002D34B7 /* SkipWhile.swift */,
 				4CEC63D41D3B90D2002D34B7 /* TakeCount.swift */,
-				4CEC63D51D3B90D2002D34B7 /* TakeLast.swift */,
 				4CEC63D61D3B90D2002D34B7 /* TakeTime.swift */,
 				4CEC63D71D3B90D2002D34B7 /* TakeUntil.swift */,
 				4CEC63D81D3B90D2002D34B7 /* TakeWhile.swift */,
+				4CEC63D51D3B90D2002D34B7 /* TakeLast.swift */,
 				4CEC63D91D3B90D2002D34B7 /* Times.swift */,
 			);
 			path = Sequence;
@@ -959,7 +951,6 @@
 				4C62A5F31D3AA282007F67BB /* Frameworks */,
 				4C62A5F41D3AA282007F67BB /* Headers */,
 				4C62A5F51D3AA282007F67BB /* Resources */,
-				4C62A67D1D3AA308007F67BB /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -997,7 +988,6 @@
 				4C6CB81C1D407278009DA8A1 /* Frameworks */,
 				4C6CB81D1D407278009DA8A1 /* Headers */,
 				4C6CB81E1D407278009DA8A1 /* Resources */,
-				4C7B48541D407D0F00A7958A /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1016,7 +1006,6 @@
 				4C6CB8291D407299009DA8A1 /* Frameworks */,
 				4C6CB82A1D407299009DA8A1 /* Headers */,
 				4C6CB82B1D407299009DA8A1 /* Resources */,
-				4C7B48561D407D3600A7958A /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1035,7 +1024,6 @@
 				4C6CB8361D4072A5009DA8A1 /* Frameworks */,
 				4C6CB8371D4072A5009DA8A1 /* Headers */,
 				4C6CB8381D4072A5009DA8A1 /* Resources */,
-				4C9A8DD01D407D93009CBAAC /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1164,7 +1152,6 @@
 				4C62A6541D3AA2CA007F67BB /* OperationObserver.swift in Sources */,
 				4CEC63C21D3B8EC2002D34B7 /* ImmediateScheduler.swift in Sources */,
 				4CEC63E71D3B90D2002D34B7 /* TakeCount.swift in Sources */,
-				4CEC63DB1D3B90D2002D34B7 /* Compose.swift in Sources */,
 				4C62A6591D3AA2CA007F67BB /* SignalCustomOperator.swift in Sources */,
 				4CEC63C31D3B8EC2002D34B7 /* QueueScheduler.swift in Sources */,
 				4C62A6551D3AA2CA007F67BB /* StreamObserver.swift in Sources */,
@@ -1177,10 +1164,13 @@
 				4CEC63BA1D3B8C04002D34B7 /* ControlWithPredicate.swift in Sources */,
 				4CEC63BB1D3B8C04002D34B7 /* ControlWithTime.swift in Sources */,
 				4C62A64D1D3AA2CA007F67BB /* Response.swift in Sources */,
+				4C6E21701D43EB72007A6D47 /* AtomicBool.swift in Sources */,
 				4C62A6561D3AA2CA007F67BB /* ResponseOperator.swift in Sources */,
+				4C68B8561D43CA3A0068132B /* Operator+Sequence.swift in Sources */,
 				4C62A65E1D3AA2CA007F67BB /* NodeProducer.swift in Sources */,
 				4C62A66F1D3AA2CA007F67BB /* CompositeDisposable.swift in Sources */,
 				4CEC63F91D3BA165002D34B7 /* Coalesce.swift in Sources */,
+				4C6E21661D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */,
 				4C2157151D3CD9B3000503A6 /* CustomizeSignal.swift in Sources */,
 				4C62A6631D3AA2CA007F67BB /* IntermediateType.swift in Sources */,
 				4CEC63B91D3B8C04002D34B7 /* ControlWIthCount.swift in Sources */,
@@ -1190,6 +1180,7 @@
 				4C62A65B1D3AA2CA007F67BB /* ValueCustomOperator.swift in Sources */,
 				4C62A6571D3AA2CA007F67BB /* SignalOperator.swift in Sources */,
 				4C62A6511D3AA2CA007F67BB /* Repository.swift in Sources */,
+				4C68B85F1D43E0FA0068132B /* Operator+Timing.swift in Sources */,
 				4C2157121D3CD935000503A6 /* CustomizeValue.swift in Sources */,
 				4CEC63DA1D3B90D2002D34B7 /* CombinePrevious.swift in Sources */,
 				4CEC63E01D3B90D2002D34B7 /* Index.swift in Sources */,
@@ -1202,26 +1193,31 @@
 				4C62A6721D3AA2CA007F67BB /* SimpleDisposable.swift in Sources */,
 				4CEC63FC1D3BA165002D34B7 /* Throttle.swift in Sources */,
 				4C62A6731D3AA2CA007F67BB /* Bag.swift in Sources */,
+				4C68B85A1D43CA9F0068132B /* Compose.swift in Sources */,
 				4CEC63FD1D3BA165002D34B7 /* Timeout.swift in Sources */,
 				4CEC63F31D3BA0DC002D34B7 /* DeliverOn.swift in Sources */,
 				4C2157081D3BC41E000503A6 /* TimeoutWithError.swift in Sources */,
 				4CEC63E91D3B90D2002D34B7 /* TakeTime.swift in Sources */,
-				4CEC63E11D3B90D2002D34B7 /* SampleOn.swift in Sources */,
+				4CEC63E11D3B90D2002D34B7 /* SampleWith.swift in Sources */,
 				4CEC63DD1D3B90D2002D34B7 /* DistinctLatest.swift in Sources */,
 				4C8AF0B11D3D304D00BD3E84 /* TryMap.swift in Sources */,
 				4CEC63E81D3B90D2002D34B7 /* TakeLast.swift in Sources */,
 				4C21570C1D3CD7E0000503A6 /* Collect.swift in Sources */,
+				4C68B8531D43CA360068132B /* Operator+Customization.swift in Sources */,
 				4CEC63AF1D3B82D7002D34B7 /* Map.swift in Sources */,
 				4CEC63C51D3B8EC2002D34B7 /* UIScheduler.swift in Sources */,
+				4C6E215C1D43E56F007A6D47 /* Operator+Error.swift in Sources */,
 				4CEC63EE1D3B9180002D34B7 /* Ring.swift in Sources */,
-				4C62A65D1D3AA2CA007F67BB /* Operators+PipeOperator.swift in Sources */,
+				4C62A65D1D3AA2CA007F67BB /* Operator+PipeOperator.swift in Sources */,
 				4C62A6761D3AA2CA007F67BB /* NoError.swift in Sources */,
 				4C62A6601D3AA2CA007F67BB /* StreamProducer.swift in Sources */,
+				4C6E216C1D43EB72007A6D47 /* Atomic.swift in Sources */,
 				4C2157171D3CDA3F000503A6 /* CustomizeResponse.swift in Sources */,
 				4CEC63DF1D3B90D2002D34B7 /* IgnoreNil.swift in Sources */,
 				4C62A6771D3AA2CA007F67BB /* Result.swift in Sources */,
 				4CEC63DC1D3B90D2002D34B7 /* Distinct.swift in Sources */,
 				4CEC63EC1D3B90D2002D34B7 /* Times.swift in Sources */,
+				4C6E21611D43E5D7007A6D47 /* Operator+Async.swift in Sources */,
 				4C62A66C1D3AA2CA007F67BB /* Relationship.swift in Sources */,
 				4C8AF0AB1D3D2BBC00BD3E84 /* NodeProxy.swift in Sources */,
 				4CEC63E31D3B90D2002D34B7 /* SkipCount.swift in Sources */,
@@ -1248,6 +1244,7 @@
 				4C9A8DD91D407DFA009CBAAC /* OperatorType.swift in Sources */,
 				4C9A8E881D407EA6009CBAAC /* ControlWIthCount.swift in Sources */,
 				4C9A8E8B1D407EA6009CBAAC /* ControlWithTrigger.swift in Sources */,
+				4C68B8501D43CA360068132B /* Operator+Customization.swift in Sources */,
 				4C9A8EA61D407EB7009CBAAC /* Bag.swift in Sources */,
 				4C9A8E5D1D407E9F009CBAAC /* TakeUntil.swift in Sources */,
 				4C9A8E3F1D407E90009CBAAC /* CustomizeValue.swift in Sources */,
@@ -1268,20 +1265,21 @@
 				4C9A8EBB1D407EBE009CBAAC /* ImmediateScheduler.swift in Sources */,
 				4C9A8E4C1D407E9F009CBAAC /* CombinePrevious.swift in Sources */,
 				4C9A8E141D407E66009CBAAC /* Subscription.swift in Sources */,
-				4C9A8E4D1D407E9F009CBAAC /* Compose.swift in Sources */,
 				4C9A8E8A1D407EA6009CBAAC /* ControlWithTime.swift in Sources */,
 				4C9A8E1F1D407E75009CBAAC /* SignalOperator.swift in Sources */,
 				4C9A8DFD1D407E50009CBAAC /* ProcessProducer.swift in Sources */,
 				4C9A8E891D407EA6009CBAAC /* ControlWithPredicate.swift in Sources */,
 				4C9A8DD61D407DFA009CBAAC /* IntermediateType.swift in Sources */,
-				4C9A8E541D407E9F009CBAAC /* SampleOn.swift in Sources */,
+				4C9A8E541D407E9F009CBAAC /* SampleWith.swift in Sources */,
 				4C9A8E521D407E9F009CBAAC /* Index.swift in Sources */,
 				4C9A8E1E1D407E75009CBAAC /* SignalDefaultOperator.swift in Sources */,
+				4C6E216D1D43EB72007A6D47 /* AtomicBool.swift in Sources */,
 				4C9A8DFC1D407E50009CBAAC /* StreamProducer.swift in Sources */,
 				4C9A8E501D407E9F009CBAAC /* Filter.swift in Sources */,
 				4C9A8E4E1D407E9F009CBAAC /* Distinct.swift in Sources */,
 				4C9A8DE71D407E03009CBAAC /* Stream.swift in Sources */,
 				4C9A8E5F1D407E9F009CBAAC /* Times.swift in Sources */,
+				4C6E21631D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */,
 				4C9A8E0A1D407E5F009CBAAC /* NodeObserver.swift in Sources */,
 				4C9A8E131D407E66009CBAAC /* Relationship.swift in Sources */,
 				4C9A8E311D407E7F009CBAAC /* Collect.swift in Sources */,
@@ -1289,8 +1287,9 @@
 				4C9A8E5B1D407E9F009CBAAC /* TakeLast.swift in Sources */,
 				4C9A8E371D407E87009CBAAC /* AsyncOperator.swift in Sources */,
 				4C9A8E1C1D407E75009CBAAC /* ResponseOperator.swift in Sources */,
-				4C9A8E191D407E6E009CBAAC /* Operators+PipeOperator.swift in Sources */,
+				4C9A8E191D407E6E009CBAAC /* Operator+PipeOperator.swift in Sources */,
 				4C9A8DD71D407DFA009CBAAC /* ProxyType.swift in Sources */,
+				4C68B85C1D43E0FA0068132B /* Operator+Timing.swift in Sources */,
 				4C9A8EAA1D407EB7009CBAAC /* NoError.swift in Sources */,
 				4C9A8DE81D407E03009CBAAC /* Operation.swift in Sources */,
 				4C9A8E5A1D407E9F009CBAAC /* TakeCount.swift in Sources */,
@@ -1303,6 +1302,7 @@
 				4C9A8E591D407E9F009CBAAC /* SkipWhile.swift in Sources */,
 				4C9A8E961D407EAE009CBAAC /* Delay.swift in Sources */,
 				4C9A8E951D407EAE009CBAAC /* Debounce.swift in Sources */,
+				4C68B8571D43CA9C0068132B /* Compose.swift in Sources */,
 				4C9A8EC91D407EC5009CBAAC /* Disposable.swift in Sources */,
 				4C9A8E531D407E9F009CBAAC /* Map.swift in Sources */,
 				4C9A8DD81D407DFA009CBAAC /* ProducerType.swift in Sources */,
@@ -1315,14 +1315,18 @@
 				4C9A8E3D1D407E90009CBAAC /* CustomizeResponse.swift in Sources */,
 				4C9A8E201D407E75009CBAAC /* ValueCustomOperator.swift in Sources */,
 				4C9A8E0C1D407E5F009CBAAC /* StreamObserver.swift in Sources */,
+				4C6E21591D43E56F007A6D47 /* Operator+Error.swift in Sources */,
 				4C9A8DD41D407DFA009CBAAC /* SourceType.swift in Sources */,
 				4C9A8E981D407EAE009CBAAC /* Timeout.swift in Sources */,
 				4C9A8E971D407EAE009CBAAC /* Throttle.swift in Sources */,
 				4C9A8DE61D407E03009CBAAC /* Node.swift in Sources */,
+				4C6E21691D43EB72007A6D47 /* Atomic.swift in Sources */,
+				4C68B84E1D43C6C70068132B /* Operator+Sequence.swift in Sources */,
 				4C9A8E461D407E97009CBAAC /* TryMap.swift in Sources */,
 				4C9A8ECB1D407EC5009CBAAC /* SimpleDisposable.swift in Sources */,
 				4C9A8E941D407EAE009CBAAC /* Coalesce.swift in Sources */,
 				4C9A8E571D407E9F009CBAAC /* SkipTime.swift in Sources */,
+				4C6E215E1D43E5D7007A6D47 /* Operator+Async.swift in Sources */,
 				4C9A8E551D407E9F009CBAAC /* Scan.swift in Sources */,
 				4C9A8DF41D407E49009CBAAC /* OperationProxy.swift in Sources */,
 				4C9A8E1D1D407E75009CBAAC /* SignalCustomOperator.swift in Sources */,
@@ -1361,20 +1365,22 @@
 				4C9A8EBF1D407EBE009CBAAC /* ImmediateScheduler.swift in Sources */,
 				4C9A8E601D407EA0009CBAAC /* CombinePrevious.swift in Sources */,
 				4C9A8E161D407E67009CBAAC /* Subscription.swift in Sources */,
-				4C9A8E611D407EA0009CBAAC /* Compose.swift in Sources */,
 				4C9A8E8E1D407EA7009CBAAC /* ControlWithTime.swift in Sources */,
 				4C9A8E261D407E76009CBAAC /* SignalOperator.swift in Sources */,
 				4C9A8E001D407E52009CBAAC /* ProcessProducer.swift in Sources */,
 				4C9A8E8D1D407EA7009CBAAC /* ControlWithPredicate.swift in Sources */,
 				4C9A8DDC1D407DFA009CBAAC /* IntermediateType.swift in Sources */,
-				4C9A8E681D407EA0009CBAAC /* SampleOn.swift in Sources */,
+				4C9A8E681D407EA0009CBAAC /* SampleWith.swift in Sources */,
 				4C9A8E661D407EA0009CBAAC /* Index.swift in Sources */,
 				4C9A8E251D407E76009CBAAC /* SignalDefaultOperator.swift in Sources */,
 				4C9A8DFF1D407E52009CBAAC /* StreamProducer.swift in Sources */,
+				4C6E216E1D43EB72007A6D47 /* AtomicBool.swift in Sources */,
 				4C9A8E641D407EA0009CBAAC /* Filter.swift in Sources */,
+				4C68B8541D43CA390068132B /* Operator+Sequence.swift in Sources */,
 				4C9A8E621D407EA0009CBAAC /* Distinct.swift in Sources */,
 				4C9A8DEB1D407E03009CBAAC /* Stream.swift in Sources */,
 				4C9A8E731D407EA0009CBAAC /* Times.swift in Sources */,
+				4C6E21641D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */,
 				4C9A8E0D1D407E60009CBAAC /* NodeObserver.swift in Sources */,
 				4C9A8E151D407E67009CBAAC /* Relationship.swift in Sources */,
 				4C9A8E331D407E7F009CBAAC /* Collect.swift in Sources */,
@@ -1382,8 +1388,9 @@
 				4C9A8E6F1D407EA0009CBAAC /* TakeLast.swift in Sources */,
 				4C9A8E391D407E88009CBAAC /* AsyncOperator.swift in Sources */,
 				4C9A8E231D407E76009CBAAC /* ResponseOperator.swift in Sources */,
-				4C9A8E1A1D407E6F009CBAAC /* Operators+PipeOperator.swift in Sources */,
+				4C9A8E1A1D407E6F009CBAAC /* Operator+PipeOperator.swift in Sources */,
 				4C9A8DDD1D407DFA009CBAAC /* ProxyType.swift in Sources */,
+				4C68B85D1D43E0FA0068132B /* Operator+Timing.swift in Sources */,
 				4C9A8EB11D407EB8009CBAAC /* NoError.swift in Sources */,
 				4C9A8DEC1D407E03009CBAAC /* Operation.swift in Sources */,
 				4C9A8E6E1D407EA0009CBAAC /* TakeCount.swift in Sources */,
@@ -1396,6 +1403,7 @@
 				4C9A8E6D1D407EA0009CBAAC /* SkipWhile.swift in Sources */,
 				4C9A8E9C1D407EAE009CBAAC /* Delay.swift in Sources */,
 				4C9A8E9B1D407EAE009CBAAC /* Debounce.swift in Sources */,
+				4C68B8581D43CA9D0068132B /* Compose.swift in Sources */,
 				4C9A8ECE1D407EC5009CBAAC /* Disposable.swift in Sources */,
 				4C9A8E671D407EA0009CBAAC /* Map.swift in Sources */,
 				4C9A8DDE1D407DFA009CBAAC /* ProducerType.swift in Sources */,
@@ -1405,17 +1413,21 @@
 				4C9A8E411D407E91009CBAAC /* CustomizeSignal.swift in Sources */,
 				4C9A8DED1D407E03009CBAAC /* Repository.swift in Sources */,
 				4C9A8EC01D407EBE009CBAAC /* QueueScheduler.swift in Sources */,
+				4C68B8511D43CA360068132B /* Operator+Customization.swift in Sources */,
 				4C9A8E401D407E91009CBAAC /* CustomizeResponse.swift in Sources */,
 				4C9A8E271D407E76009CBAAC /* ValueCustomOperator.swift in Sources */,
+				4C6E215A1D43E56F007A6D47 /* Operator+Error.swift in Sources */,
 				4C9A8E0F1D407E60009CBAAC /* StreamObserver.swift in Sources */,
 				4C9A8DDA1D407DFA009CBAAC /* SourceType.swift in Sources */,
 				4C9A8E9E1D407EAE009CBAAC /* Timeout.swift in Sources */,
 				4C9A8E9D1D407EAE009CBAAC /* Throttle.swift in Sources */,
+				4C6E216A1D43EB72007A6D47 /* Atomic.swift in Sources */,
 				4C9A8DEA1D407E03009CBAAC /* Node.swift in Sources */,
 				4C9A8E481D407E98009CBAAC /* TryMap.swift in Sources */,
 				4C9A8ED01D407EC5009CBAAC /* SimpleDisposable.swift in Sources */,
 				4C9A8E9A1D407EAE009CBAAC /* Coalesce.swift in Sources */,
 				4C9A8E6B1D407EA0009CBAAC /* SkipTime.swift in Sources */,
+				4C6E215F1D43E5D7007A6D47 /* Operator+Async.swift in Sources */,
 				4C9A8E691D407EA0009CBAAC /* Scan.swift in Sources */,
 				4C9A8DF71D407E4A009CBAAC /* OperationProxy.swift in Sources */,
 				4C9A8E241D407E76009CBAAC /* SignalCustomOperator.swift in Sources */,
@@ -1454,20 +1466,22 @@
 				4C9A8EC31D407EBF009CBAAC /* ImmediateScheduler.swift in Sources */,
 				4C9A8E741D407EA0009CBAAC /* CombinePrevious.swift in Sources */,
 				4C9A8E181D407E68009CBAAC /* Subscription.swift in Sources */,
-				4C9A8E751D407EA0009CBAAC /* Compose.swift in Sources */,
 				4C9A8E921D407EA7009CBAAC /* ControlWithTime.swift in Sources */,
 				4C9A8E2D1D407E77009CBAAC /* SignalOperator.swift in Sources */,
 				4C9A8E031D407E52009CBAAC /* ProcessProducer.swift in Sources */,
 				4C9A8E911D407EA7009CBAAC /* ControlWithPredicate.swift in Sources */,
 				4C9A8DE21D407DFB009CBAAC /* IntermediateType.swift in Sources */,
-				4C9A8E7C1D407EA0009CBAAC /* SampleOn.swift in Sources */,
+				4C9A8E7C1D407EA0009CBAAC /* SampleWith.swift in Sources */,
 				4C9A8E7A1D407EA0009CBAAC /* Index.swift in Sources */,
 				4C9A8E2C1D407E77009CBAAC /* SignalDefaultOperator.swift in Sources */,
 				4C9A8E021D407E52009CBAAC /* StreamProducer.swift in Sources */,
+				4C6E216F1D43EB72007A6D47 /* AtomicBool.swift in Sources */,
 				4C9A8E781D407EA0009CBAAC /* Filter.swift in Sources */,
+				4C68B8551D43CA3A0068132B /* Operator+Sequence.swift in Sources */,
 				4C9A8E761D407EA0009CBAAC /* Distinct.swift in Sources */,
 				4C9A8DEF1D407E04009CBAAC /* Stream.swift in Sources */,
 				4C9A8E871D407EA0009CBAAC /* Times.swift in Sources */,
+				4C6E21651D43E60E007A6D47 /* Operator+Aggregate.swift in Sources */,
 				4C9A8E101D407E60009CBAAC /* NodeObserver.swift in Sources */,
 				4C9A8E171D407E68009CBAAC /* Relationship.swift in Sources */,
 				4C9A8E351D407E80009CBAAC /* Collect.swift in Sources */,
@@ -1475,8 +1489,9 @@
 				4C9A8E831D407EA0009CBAAC /* TakeLast.swift in Sources */,
 				4C9A8E3B1D407E89009CBAAC /* AsyncOperator.swift in Sources */,
 				4C9A8E2A1D407E77009CBAAC /* ResponseOperator.swift in Sources */,
-				4C9A8E1B1D407E6F009CBAAC /* Operators+PipeOperator.swift in Sources */,
+				4C9A8E1B1D407E6F009CBAAC /* Operator+PipeOperator.swift in Sources */,
 				4C9A8DE31D407DFB009CBAAC /* ProxyType.swift in Sources */,
+				4C68B85E1D43E0FA0068132B /* Operator+Timing.swift in Sources */,
 				4C9A8EB81D407EB8009CBAAC /* NoError.swift in Sources */,
 				4C9A8DF01D407E04009CBAAC /* Operation.swift in Sources */,
 				4C9A8E821D407EA0009CBAAC /* TakeCount.swift in Sources */,
@@ -1489,6 +1504,7 @@
 				4C9A8E811D407EA0009CBAAC /* SkipWhile.swift in Sources */,
 				4C9A8EA21D407EAF009CBAAC /* Delay.swift in Sources */,
 				4C9A8EA11D407EAF009CBAAC /* Debounce.swift in Sources */,
+				4C68B8591D43CA9E0068132B /* Compose.swift in Sources */,
 				4C9A8ED31D407EC6009CBAAC /* Disposable.swift in Sources */,
 				4C9A8E7B1D407EA0009CBAAC /* Map.swift in Sources */,
 				4C9A8DE41D407DFB009CBAAC /* ProducerType.swift in Sources */,
@@ -1498,17 +1514,21 @@
 				4C9A8E441D407E92009CBAAC /* CustomizeSignal.swift in Sources */,
 				4C9A8DF11D407E04009CBAAC /* Repository.swift in Sources */,
 				4C9A8EC41D407EBF009CBAAC /* QueueScheduler.swift in Sources */,
+				4C68B8521D43CA360068132B /* Operator+Customization.swift in Sources */,
 				4C9A8E431D407E92009CBAAC /* CustomizeResponse.swift in Sources */,
 				4C9A8E2E1D407E77009CBAAC /* ValueCustomOperator.swift in Sources */,
+				4C6E215B1D43E56F007A6D47 /* Operator+Error.swift in Sources */,
 				4C9A8E121D407E60009CBAAC /* StreamObserver.swift in Sources */,
 				4C9A8DE01D407DFB009CBAAC /* SourceType.swift in Sources */,
 				4C9A8EA41D407EAF009CBAAC /* Timeout.swift in Sources */,
 				4C9A8EA31D407EAF009CBAAC /* Throttle.swift in Sources */,
+				4C6E216B1D43EB72007A6D47 /* Atomic.swift in Sources */,
 				4C9A8DEE1D407E04009CBAAC /* Node.swift in Sources */,
 				4C9A8E4A1D407E99009CBAAC /* TryMap.swift in Sources */,
 				4C9A8ED51D407EC6009CBAAC /* SimpleDisposable.swift in Sources */,
 				4C9A8EA01D407EAF009CBAAC /* Coalesce.swift in Sources */,
 				4C9A8E7F1D407EA0009CBAAC /* SkipTime.swift in Sources */,
+				4C6E21601D43E5D7007A6D47 /* Operator+Async.swift in Sources */,
 				4C9A8E7D1D407EA0009CBAAC /* Scan.swift in Sources */,
 				4C9A8DFA1D407E4B009CBAAC /* OperationProxy.swift in Sources */,
 				4C9A8E2B1D407E77009CBAAC /* SignalCustomOperator.swift in Sources */,

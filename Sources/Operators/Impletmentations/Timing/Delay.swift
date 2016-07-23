@@ -9,16 +9,16 @@
 import Foundation
 
 final class Delay<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Scheduler> {
-    private let delay: NSTimeInterval
+    private let interval: NSTimeInterval
     
-    init(delay: NSTimeInterval, scheduler: Scheduler) {
-        self.delay = delay
+    init(interval: NSTimeInterval, scheduler: Scheduler) {
+        self.interval = interval
         super.init(scheduler: scheduler)
     }
     
     override func forward(sink: T -> Void) -> (T -> Void) {
         return { value in
-            self.schedule(after: self.delay) {
+            self.schedule(after: self.interval) {
                 sink(value)
             }
         }
@@ -26,7 +26,7 @@ final class Delay<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Schedul
     
     override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void)? {
         return {
-            self.schedule(after: self.delay) {
+            self.schedule(after: self.interval) {
                 completionSink()
             }
         }

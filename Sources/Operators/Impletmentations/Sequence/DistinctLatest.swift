@@ -11,15 +11,15 @@ import Foundation
 final class DistinctLatest<T>: ValueCustomOperator<T, T> {
     private var latest: T?
     
-    private let predicate: (T, T) -> Bool
+    private let predicate: (latest: T, value: T) -> Bool
     
-    init(predicate: (T, T) -> Bool) {
+    init(_ predicate: (T, T) -> Bool) {
         self.predicate = predicate
     }
     
     override func forward(sink: T -> Void) -> (T -> Void) {
         return { value in
-            if self.latest == nil || self.predicate(self.latest!, value) {
+            if self.latest == nil || self.predicate(latest: self.latest!, value: value) {
                 self.latest = value
                 sink(value)
             }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 public final class BinaryDisposable<D1: Disposable, D2: Disposable>: Disposable {
     

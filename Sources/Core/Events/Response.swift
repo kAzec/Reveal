@@ -49,6 +49,14 @@ public extension Response {
         }
     }
     
+    var terminating: Bool {
+        if case .next = self {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func map<U>(@noescape transform: Value -> U) -> Response<U, Error> {
         switch self {
         case .next(let value):

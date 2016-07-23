@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 protocol ProducerType: class {
     associatedtype Target: IntermediateType

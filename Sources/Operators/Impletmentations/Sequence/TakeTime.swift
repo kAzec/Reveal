@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 final class TakeTime<T, Scheduler: DelaySchedulerType>: ControlWithTime<T, Scheduler> {
     private var shouldTake: AtomicBool {

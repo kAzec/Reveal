@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 final class Coalesce<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, [T], Scheduler> {
     private let interval: NSTimeInterval

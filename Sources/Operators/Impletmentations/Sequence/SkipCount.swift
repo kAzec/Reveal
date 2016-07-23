@@ -19,10 +19,9 @@ final class SkipCount<T>: ControlWithCount<T> {
         return { value in
             if self.controlValue {
                 self.increment()
-                return
+            } else {
+                sink(value)
             }
-            
-            sink(value)
         }
     }
 }

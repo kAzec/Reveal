@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 /// A disposable that disposes a collection of disposables upon disposing.
 public class CompositeDisposable: Disposable {

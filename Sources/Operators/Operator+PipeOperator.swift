@@ -1,5 +1,5 @@
 //
-//  Operators+PipeOperator.swift
+//  Operator+PipeOperator.swift
 //  Reveal
 //
 //  Created by 锋炜 刘 on 16/7/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-infix operator |> { associativity left precedence 140 }
+infix operator |> { associativity left precedence 95 }
 
 // MARK: - Node
 public func |><A, B>(lhs: Node<A>, rhs: ValueOperator<A, B>) -> NodeProxy<A, B> {

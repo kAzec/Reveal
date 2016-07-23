@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class Index<T>: ValueCustomOperator<T, (Int, T)> {
+final class Index<T>: ValueCustomOperator<T, (index: Int, value: T)> {
     typealias Indexed = (index: Int, value: T)
     
     private var currentIndex: Int = -1

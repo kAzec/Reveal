@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Atomic
 
 /// Subscription to source, disposable.
 public final class Subscription<Source: SourceType>: Disposable {
