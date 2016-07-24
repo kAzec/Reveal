@@ -27,7 +27,6 @@ final class Throttle<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Sche
                 if old == nil {
                     self.schedule(after: self.interval) { [weak self] in
                         guard let weakSelf = self else { return }
-                        
                         sink(weakSelf.latest.swap(nil)!)
                     }
                 }

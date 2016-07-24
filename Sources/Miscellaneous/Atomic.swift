@@ -71,7 +71,7 @@ public final class Atomic<T> {
     public func swap(newValue: T) -> T {
         pthread_mutex_lock(mutex); defer { pthread_mutex_unlock(mutex) }
         
-        let oldValue = newValue
+        let oldValue = atomicValue
         atomicValue = newValue
         return oldValue
     }
