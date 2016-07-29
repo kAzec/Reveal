@@ -8,17 +8,19 @@
 
 import Foundation
 
-final class Times<T>: ValueDefaultOperator<T, T> {
+final class Times<T>: ValueCustomOperator<T, T> {
     private let multiplier: Int
+    private var completionSink: (Void -> Void)?
     
     init(_ multiplier: Int) {
         precondition(multiplier >= 0)
         self.multiplier = multiplier
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         guard multiplier > 0 else {
-            return { [sink] _ in let _ = sink }
+            completionSink?()
+            return { _ in }
         }
         
         guard multiplier > 1 else {
@@ -33,5 +35,10 @@ final class Times<T>: ValueDefaultOperator<T, T> {
                 sink(value)
             }
         }
+    }
+    
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
+        self.completionSink = completionSink
+        return completionSink
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class ValueDefaultOperator<I, O>: ValueOperator<I, O> {
     final override func forwardSignal(sink: Signal<O>.Action) -> Signal<I>.Action {
-        let onNext = nextForwarder(signal: sink)
+        let onNext = forward{ sink(.next($0)) }
         
         return { signal in
             switch signal {
@@ -23,7 +23,7 @@ class ValueDefaultOperator<I, O>: ValueOperator<I, O> {
     }
     
     final override func forwardResponse<E>(sink: Response<O, E>.Action) -> Response<I, E>.Action {
-        let onNext = nextForwarder(response: sink)
+        let onNext = forward{ sink(.next($0)) }
         
         return { response in
             switch response {

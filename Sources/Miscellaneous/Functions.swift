@@ -6,18 +6,25 @@
 //  Copyright © 2016年 kAzec. All rights reserved.
 //
 
-import Foundation
+/// Indicates the function is abstract.
+@noreturn
+func RevealUnimplemented(file: String = #file, line: Int = #line, function: String = #function) {
+    fatalError("Method: \(function) is abstract. File: \(file), line: \(line)")
+}
 
-func identity<T>(value: T) -> T {
+// MARK: - Funtionals
+
+/// Identical transform.
+func id<T>(value: T) -> T {
     return value
 }
 
-@noreturn
-func RevealUnimplemented() {
-    fatalError("Abstract method not implemented.")
+/// Compose function.
+func compose<A, B, C>(lhs: A -> B, _ rhs: B -> C) -> (A -> C) {
+    return { rhs(lhs($0)) }
 }
 
-infix operator ∘ { associativity left precedence 140 }
-func ∘<A, B, C>(rhs: A -> B, lhs: B -> C) -> (A -> C) {
-    return { lhs(rhs($0)) }
+/// Lift observee over certain transform.
+func apply<A, B, U>(transform: A -> B, to observee: (A -> Void) -> U) -> ((B -> Void) -> U) {
+    return { observee(compose(transform, $0)) }
 }

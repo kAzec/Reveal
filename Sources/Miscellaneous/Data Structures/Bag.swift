@@ -8,26 +8,25 @@
 
 import Foundation
 
-struct Bag<Element> {
-    typealias Token = UInt
-    typealias Elements = (value: Element, token: UInt)
+public struct Bag<Element> {
+    public typealias RemovalToken = UInt
     
     private var elements: ContiguousArray<Element>
-    private var tokens: ContiguousArray<Token> = []
+    private var tokens: ContiguousArray<RemovalToken> = []
     
     private var currentToken: UInt = 0
     
-    init() {
+    public init() {
         elements = []
     }
     
-    init<S: SequenceType where S.Generator.Element == Element>(_ sequence: S) {
+    public init<S: SequenceType where S.Generator.Element == Element>(_ sequence: S) {
         elements = ContiguousArray(sequence)
         currentToken = UInt(elements.count)
         tokens = ContiguousArray(0..<currentToken)
     }
     
-    mutating func append(element: Element) -> Token {
+    public mutating func append(element: Element) -> RemovalToken {
         let token = currentToken
         
         tokens.append(token)
@@ -37,11 +36,11 @@ struct Bag<Element> {
         return token
     }
     
-    mutating func remove(for token: Token) {
+    public mutating func remove(for token: RemovalToken) -> Element? {
         let count = tokens.count
         let first = tokens[0]
         let last = tokens[count - 1]
-        guard token <= last && token >= first else { return }
+        guard token <= last && token >= first else { return nil }
         
         var removalIndex: Int
         
@@ -64,24 +63,26 @@ struct Bag<Element> {
         }
         
         if tokens[removalIndex] == token {
-            elements.removeAtIndex(removalIndex)
             tokens.removeAtIndex(removalIndex)
+            return elements.removeAtIndex(removalIndex)
+        } else {
+            return nil
         }
     }
 }
 
 extension Bag: CollectionType {
-    typealias Index = Array<Element>.Index
+    public typealias Index = Array<Element>.Index
     
-    var startIndex: Index {
+    public var startIndex: Index {
         return elements.startIndex
     }
     
-    var endIndex: Index {
+    public var endIndex: Index {
         return elements.endIndex
     }
     
-    subscript(index: Index) -> Element {
+    public subscript(index: Index) -> Element {
         return elements[index]
     }
 }

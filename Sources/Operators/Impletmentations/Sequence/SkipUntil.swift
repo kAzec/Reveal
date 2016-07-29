@@ -9,11 +9,11 @@
 import Foundation
 
 final class SkipUntil<T, Trigger: SourceType>: ControlWithTrigger<T, Trigger> {
-    override init(_ trigger: Trigger, predicate isTriggerTerminating: (Trigger.Element -> Bool)?) {
-        super.init(trigger, predicate: isTriggerTerminating)
+    override init(_ trigger: Trigger, predicate: (Trigger.Element -> Bool)?) {
+        super.init(trigger, predicate: predicate)
     }
     
     override var exceptation: Bool {
-        return false
+        return true
     }
 }

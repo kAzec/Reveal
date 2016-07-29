@@ -9,15 +9,15 @@
 import Foundation
 
 /// A disposable that will optionally dispose of another disposable.
-final class SerialDisposable: Disposable {
+public final class SerialDisposable: Disposable {
     private var atomicDisposed = AtomicBool(false)
     private let atomicDisposable: Atomic<Disposable?>
     
-    var disposed: Bool {
+    public var disposed: Bool {
         return atomicDisposed.boolValue
     }
     
-    var innerDisposable: Disposable? {
+    public var innerDisposable: Disposable? {
         get {
             return atomicDisposable.value
         }
@@ -31,12 +31,12 @@ final class SerialDisposable: Disposable {
         }
     }
     
-    init(_ disposable: Disposable? = nil) {
+    public init(_ disposable: Disposable? = nil) {
         self.atomicDisposable = Atomic(disposable)
     }
     
-    func dispose() {
-        guard !atomicDisposed.swap(true) else { return }
+    public func dispose() {
+        if atomicDisposed.swap(true) { return }
         
         if let disposable = atomicDisposable.swap(nil) {
             disposable.dispose()

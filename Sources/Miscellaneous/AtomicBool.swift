@@ -12,7 +12,7 @@ import Foundation
  * Atomic boolean value.
  */
 public struct AtomicBool: BooleanType {
-    var byte: UInt8 = 0
+    private var byte: UInt8 = 0
     
     public init(_ value: Bool) {
         self.byte = (value == false ? 0 : 1)
@@ -33,7 +33,7 @@ public struct AtomicBool: BooleanType {
         }
     }
     
-    /// The boolean value.
+    /// Get The boolean value, the value may change before the getter returns.
     public var boolValue: Bool {
         return byte != 0
     }

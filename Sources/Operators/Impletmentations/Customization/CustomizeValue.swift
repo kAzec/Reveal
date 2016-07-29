@@ -9,7 +9,7 @@
 import Foundation
 
 final class CustomizeValue<I, O>: ValueDefaultOperator<I, O> {
-    typealias Forwarder = (I, (O -> Void)) -> Void
+    typealias Forwarder = (I, Sink) -> Void
     
     private let forwarder: Forwarder
     
@@ -17,7 +17,7 @@ final class CustomizeValue<I, O>: ValueDefaultOperator<I, O> {
         self.forwarder = forwarder
     }
     
-    override func forward(sink: O -> Void) -> (I -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { element in
             self.forwarder(element, sink)
         }

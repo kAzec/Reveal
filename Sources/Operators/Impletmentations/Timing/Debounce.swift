@@ -19,15 +19,13 @@ final class Debounce<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Sche
         super.init(scheduler: scheduler)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             self.latest.swap { _ in
                 self.forwardNeeded = !self.receivedBeforeTimeout
                 self.receivedBeforeTimeout = true
                 
-                self.schedule(after: self.interval) { [weak self] in
-                    guard let weakSelf = self else { return }
-                    
+                self.schedule(after: self.interval) { weakSelf in
                     if weakSelf.forwardNeeded {
                         sink(weakSelf.latest.swap(nil)!)
                     }

@@ -13,14 +13,21 @@ final class TakeCount<T>: ControlWithCount<T> {
         super.init(count)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
-        guard countLimit > 0 else { return { [sink] _ in let _ = sink } }
+    override func forward(sink: Sink) -> Source {
+        guard limit > 0 else {
+            completionSink?()
+            return { _ in }
+        }
         
         return { value in
-            guard self.controlValue else { return }
+            guard !self.exceeded else { return }
             
             self.increment()
             sink(value)
         }
+    }
+    
+    override var onExceedingLimit: (Void -> Void)? {
+        return completionSink
     }
 }

@@ -19,7 +19,7 @@ public final class UIScheduler: SchedulerType {
     public init() {  }
     
     public func schedule(action: Void -> Void) -> Disposable? {
-        let disposable = SimpleDisposable()
+        let disposable = BooleanDisposable()
         
         let actionAndDecrement: Void -> Void = {
             if !disposable.disposed {

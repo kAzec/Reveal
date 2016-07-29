@@ -8,48 +8,48 @@
 
 import Foundation
 
-public final class Operation<Value, Error: ErrorType>: IntermediateType {
-    public typealias Element = Reveal.Response<Value, Error>
-    public typealias Response = Element
+public final class Operation<T, E: ErrorType>: BaseIntermediateType, OperationType {
+    public typealias Value = T
+    public typealias Error = E
+    public typealias Response = Reveal.Response<Value, Error>
+    public typealias Element = Response
     public typealias Action = Response -> Void
     
-    public private(set) var repository: Repository<Response>
+    public private(set) var subject: Subject<Response>
+    
+    public var operation: Operation<Value, Error> {
+        return self
+    }
     
     public init(_ name: String) {
-        repository = Repository(lockName: name)
+        subject = Subject(lockName: name)
     }
     
     deinit {
-        repository.dispose()
+        dispose()
+    }
+    
+    public func dispose() {
+        subject.dispose(with: .completed)
     }
 }
 
+// MARK: - Source & Sink
 public extension Operation {
-    func subscribe(observer: Action) -> Subscription<Operation> {
-        return repository.append(observer, owner: self) {
+    func subscribe(observer: Action) -> Disposable {
+        return subject.append(observer, owner: self) {
             observer(.completed)
         }
     }
     
-    func subscribeNext(onNext: Value -> Void) -> Subscription<Operation> {
-        return repository.append(Observer(next: onNext).action, owner: self)
-    }
-    
-    func subscribeFailed(onFailure: Error -> Void) -> Subscription<Operation> {
-        return repository.append(Observer(failure: onFailure).action, owner: self)
-    }
-    
-    func subscribeCompleted(onCompletion: Void -> Void) -> Subscription<Operation> {
-        return repository.append(Observer(completion: onCompletion).action, owner: self, failure: onCompletion)
-    }
-    
     func subscribed(@noescape by observee: Action -> Disposable?) {
-        if repository.disposed { return }
+        if subject.disposed { return }
         
         var failed = AtomicBool(false)
         var error: Response!
         let subscription = observee { response in
-            if self.repository.disposed { return }
+            if self.subject.disposed { return }
+            let lock = self.subject.lock
             
             switch response {
             case .failed:
@@ -57,37 +57,31 @@ public extension Operation {
                 
                 error = response
                 
-                if self.repository.lock.tryLock() {
+                if lock.tryLock() {
+                    defer { lock.unlock() }
                     
-                    self.repository.dispose(with: response)
-                    
-                    self.repository.lock.unlock()
+                    self.subject.dispose(with: response)
                 }
             case .next:
-                self.repository.lock.lock()
+                self.subject.lock.lock()
+                defer { self.subject.lock.unlock() }
                 
-                self.repository.on(response)
+                self.subject.on(response)
                 
                 if failed {
-                    self.repository.dispose(with: error)
+                    self.subject.dispose(with: error)
                 }
-                
-                self.repository.lock.unlock()
             case .completed:
-                self.repository.synchronizedOn(response)
+                self.subject.synchronizedOn(response)
             }
         }
         
         if let subscription = subscription {
-            if repository.disposed {
+            if subject.disposed {
                 subscription.dispose()
             } else {
-                repository.disposables.append(subscription)
+                subject.disposables.append(subscription)
             }
         }
-    }
-    
-    func dispose() {
-        repository.dispose()
     }
 }

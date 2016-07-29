@@ -29,10 +29,10 @@ final class TimeoutWithError<T, E: ErrorType, Scheduler: DelaySchedulerType>: Re
         disposable.dispose()
     }
     
-    override func forward(sink: Response<T, E>.Action) -> Response<T, E> -> Void {
+    override func forward(sink: Sink) -> Source {
         func scheduleNewTimeout() {
             let scheduledDisposable = scheduler.schedule(after: interval) {
-                guard !self.didTimeout.swap(true) else { return }
+                if self.didTimeout.swap(true) { return }
                 
                 self.consequence?()
                 sink(.failed(self.error))

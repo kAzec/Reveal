@@ -8,17 +8,18 @@
 
 import Foundation
 
-final class TakeLast<T>: SignalDefaultOperator<T, T> {
+final class TakeLast<T>: SignalDefaultOperator<T, [T]> {
     private var buffer: Ring<T>
     
     init(_ count: Int) {
         precondition(count >= 0)
-        buffer = Ring(capacity: count)
+        buffer = Ring(length: count)
     }
     
-    func forward(sink: Signal<[T]>.Action) -> Signal<T>.Action {
-        guard buffer.capacity > 0 else {
-            return { [sink] _ in let _ = sink }
+    override func forward(sink: Sink) -> Source {
+        guard buffer.length > 0 else {
+            sink(.completed)
+            return { _ in }
         }
         
         return { signal in
@@ -28,9 +29,7 @@ final class TakeLast<T>: SignalDefaultOperator<T, T> {
             case .completed:
                 if self.buffer.count > 0 {
                     let values = Array(self.buffer)
-                    let capacity = self.buffer.capacity
-                    
-                    self.buffer = Ring<T>(capacity: capacity)
+                    self.buffer.removeAll()
                     
                     sink(.next(values))
                     sink(.completed)
@@ -45,7 +44,7 @@ final class TakeLastOne<T>: SignalDefaultOperator<T, T> {
     
     override init() {  }
     
-    override func forward(sink: Signal<T>.Action) -> Signal<T>.Action {
+    override func forward(sink: Sink) -> Source {
         return { signal in
             switch signal {
             case .next(let value):

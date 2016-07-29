@@ -8,59 +8,62 @@
 
 import Foundation
 
-public final class Stream<Value>: IntermediateType {
-    public typealias Element = Reveal.Signal<Value>
-    public typealias Signal = Element
+public final class Stream<T>: BaseIntermediateType, StreamType {
+    public typealias Value = T
+    public typealias Signal = Reveal.Signal<Value>
+    public typealias Element = Signal
     public typealias Action = Signal -> Void
     
-    public private(set) var repository: Repository<Signal>
+    public private(set) var subject: Subject<Signal>
+    
+    public var stream: Stream<Value> {
+        return self
+    }
     
     public init(_ name: String) {
-        repository = Repository(lockName: name)
+        subject = Subject(lockName: name)
     }
     
     deinit {
-        repository.dispose()
+        dispose()
+    }
+    
+    public func dispose() {
+        subject.dispose(with: .completed)
     }
 }
 
+// MARK: - Source & Sink
 public extension Stream {
-    func subscribe(observer: Action) -> Subscription<Stream> {
-        return repository.append(observer, owner: self) {
+    func subscribe(observer: Action) -> Disposable {
+        return subject.append(observer, owner: self) {
             observer(.completed)
         }
     }
     
-    func subscribeNext(observer: Value -> Void) -> Subscription<Stream> {
-        return repository.append(Observer(next: observer).action, owner: self)
-    }
-    
-    func subscribeCompleted(observer: Void -> Void) -> Subscription<Stream> {
-        return repository.append(Observer(completion: observer).action, owner: self, failure: observer)
-    }
-    
     func subscribed(@noescape by observee: Action -> Disposable?) {
         let subscription = observee { signal in
-            if self.repository.disposed { return }
+            if self.subject.disposed { return }
             
             if case .next = signal {
-                self.repository.synchronizedOn(signal)
+                self.subject.synchronizedOn(signal)
             } else {
-                self.repository.dispose(with: signal)
+                self.subject.dispose(with: signal)
             }
         }
         
         if let subscription = subscription {
-            if repository.disposed {
+            if subject.disposed {
                 subscription.dispose()
             } else {
-                repository.disposables.append(subscription)
+                subject.disposables.append(subscription)
             }
         }
-
     }
-    
-    func dispose() {
-        repository.dispose()
+}
+
+public extension StreamType {
+    func promote<Error: ErrorType>(with error: Error.Type) -> Operation<Value, Error> {
+        return Operation(observee: apply(Response.makeWithEvent, to: subscribe))
     }
 }

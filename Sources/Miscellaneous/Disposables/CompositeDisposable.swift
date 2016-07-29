@@ -1,52 +1,65 @@
 //
 //  CompositeDisposable.swift
-//  Flowing
+//  Reveal
 //
-//  Created by 锋炜 刘 on 16/3/8.
+//  Created by 锋炜 刘 on 16/7/28.
 //  Copyright © 2016年 kAzec. All rights reserved.
 //
 
 import Foundation
 
-/// A disposable that disposes a collection of disposables upon disposing.
-public class CompositeDisposable: Disposable {
-    
-    public final var disposed: Bool {
-        return disposables.value == nil
+public final class CompositeDisposable: Disposable {
+    public var disposed: Bool {
+        return atomicDisposed.boolValue
     }
     
-    private var disposables: Atomic<Bag<Disposable>?>
+    private var atomicDisposed = AtomicBool(false)
+    private var atomicDisposables: Atomic<Array<Disposable>?>
     
     public init() {
-        self.disposables = Atomic(Bag())
+        atomicDisposables = Atomic([])
     }
     
     public init<S: SequenceType where S.Generator.Element == Disposable>(_ disposables: S) {
-        self.disposables = Atomic(Bag(disposables))
+        atomicDisposables = Atomic(Array(disposables))
     }
     
-    public final func append(disposable: Disposable) -> UInt? {
-        return disposables.modify { bag in
-            guard var bag = bag else {
-                disposable.dispose()
-                return nil
-            }
-            
-            return bag.append(disposable)
+    public func append(disposable: Disposable) {
+        if atomicDisposed { return disposable.dispose() }
+        if disposable.disposed { return }
+        
+        atomicDisposables.modify {
+            $0 = $0!.filter{ $0.disposed }
+            $0!.append(disposable)
         }
     }
     
-    public final func dispose() {
-        disposables.swap { disposables in
-            guard let disposables = disposables else {
-                return nil
-            }
-            
+    public func append<S: SequenceType where S.Generator.Element == Disposable>(disposables: S) {
+        if atomicDisposed {
             for disposable in disposables {
                 disposable.dispose()
             }
-            
-            return nil
+        }
+        
+        atomicDisposables.modify {
+            $0!.appendContentsOf(disposables)
+            $0 = $0!.filter{ $0.disposed }
+        }
+    }
+    
+    public func prune() {
+        if atomicDisposed { return }
+        
+        atomicDisposables.modify {
+            $0 = $0!.filter{ $0.disposed }
+        }
+    }
+    
+    public func dispose() {
+        if atomicDisposed { return }
+        
+        for disposable in atomicDisposables.swap(nil)!.reverse() {
+            disposable.dispose()
         }
     }
 }

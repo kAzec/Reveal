@@ -8,14 +8,14 @@
 
 import Foundation
 
-final class TryMap<I, O, E: ErrorType>: ResponseOperator<I, E, O, E> {
-    private let transform: I -> Result<O, E>
+final class TryMap<IV, OV, E: ErrorType>: ResponseOperator<IV, E, OV, E> {
+    private let transform: IV -> Result<OV, E>
     
-    init(_ transform: I -> Result<O, E>) {
+    init(_ transform: IV -> Result<OV, E>) {
         self.transform = transform
     }
     
-    override func forward(sink: Response<O, E>.Action) -> Response<I, E>.Action {
+    override func forward(sink: Sink) -> Source {
         return { response in
             switch response {
             case .next(let element):

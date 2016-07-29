@@ -17,7 +17,7 @@ final class DistinctLatest<T>: ValueCustomOperator<T, T> {
         self.predicate = predicate
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             if self.latest == nil || self.predicate(latest: self.latest!, value: value) {
                 self.latest = value
@@ -26,7 +26,7 @@ final class DistinctLatest<T>: ValueCustomOperator<T, T> {
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void) {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
         return {
             self.latest = nil
             completionSink()

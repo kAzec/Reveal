@@ -8,14 +8,18 @@
 
 import Foundation
 
-final class DeliverOn<T, Scheduler: SchedulerType>: AsyncOperator<T, T, Scheduler> {
-    override init(scheduler: Scheduler) {
-        super.init(scheduler: scheduler)
+class DeliverOn<T, Scheduler: SchedulerType>: ValueOperator<T, T>, AsyncType {
+    final let scheduler: Scheduler
+    final let lock = NSLock()
+    
+    init(scheduler: Scheduler) {
+        self.scheduler = scheduler
+        lock.name = String(self.dynamicType)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
-            self.schedule {
+            self.schedule { _ in
                 sink(value)
             }
         }

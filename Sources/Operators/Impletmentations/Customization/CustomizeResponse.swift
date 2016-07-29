@@ -8,8 +8,8 @@
 
 import Foundation
 
-final class CustomizeResponse<I, E: ErrorType, O, F: ErrorType>: ResponseOperator<I, E, O, F> {
-    typealias Forwarder = (Response<I, E>, Response<O, F> -> Void) -> Void
+final class CustomizeResponse<IV, E: ErrorType, OV, F: ErrorType>: ResponseOperator<IV, E, OV, F> {
+    typealias Forwarder = (I, Sink) -> Void
     
     private let forwarder: Forwarder
     
@@ -17,7 +17,7 @@ final class CustomizeResponse<I, E: ErrorType, O, F: ErrorType>: ResponseOperato
         self.forwarder = forwarder
     }
     
-    override func forward(sink: Response<O, F>.Action) -> Response<I, E> -> Void {
+    override func forward(sink: Sink) -> Source {
         return { response in
             self.forwarder(response, sink)
         }

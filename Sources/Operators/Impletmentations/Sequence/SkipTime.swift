@@ -9,24 +9,21 @@
 import Foundation
 
 final class SkipTime<Element, Scheduler: DelaySchedulerType>: ControlWithTime<Element, Scheduler> {
-    private var shouldSkip: Bool {
-        return controlValue.boolValue
-    }
-    
     override init(_ time: NSTimeInterval, scheduler: Scheduler) {
         super.init(time, scheduler: scheduler)
     }
     
-    override func forward(sink: Element -> Void) -> (Element -> Void) {
-        guard timeLimit > 0 else { return { sink($0) } }
+    override func forward(sink: Sink) -> Source {
+        guard time > 0 else { return sink }
         
         return { value in
-            if self.shouldSkip {
-                self.scheduleFlip()
-                return
-            }
+            self.scheduleFlipOnce()
             
-            sink(value)
+            if self.fliped {
+                self.lock.lock()
+                defer { self.lock.lock() }
+                sink(value)
+            }
         }
     }
 }

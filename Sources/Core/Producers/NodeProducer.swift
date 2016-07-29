@@ -8,52 +8,50 @@
 
 import Foundation
 
-public final class NodeProducer<Value>: ProducerType {
-    typealias Target = Node<Value>
+public struct NodeProducer<Value>: ProducerType {
+    public typealias Product = Node<Value>
     
-    let anonymousObservee: Target.Action -> Disposable?
+    let producerHandler: (Node<Value>.Action, CompositeDisposable) -> Void
     
-    init(_ observee: Target.Action -> Disposable?) {
-        anonymousObservee = observee
+    public init(_ producerHandler: (Node<Value>.Action, CompositeDisposable) -> Void) {
+        self.producerHandler = producerHandler
+    }
+    
+    public func startWithProduct(@noescape setup: Product -> Void) {
+        startWithProduct(setup, producerHandler: producerHandler)
+    }
+    
+    func lift<U>(forwarder: IO<Value, U>.Raw) -> NodeProducer<U> {
+        return NodeProducer<U>(producerHandler, forwarder)
     }
 }
 
-public extension Node {
-    typealias Producer = NodeProducer<Value>
-}
-
+// MARK: - NodeProducer Extensions
 public extension NodeProducer {
-    class func of<Source: SourceType where Source.Element == Value>(source source: Source) -> NodeProducer {
-        return create(source: source)
+    static func of(value: Value) -> NodeProducer {
+        return makeOfElement(value)
     }
     
-    class func of<Source: SourceType>(source source: Source, transform: Source.Element -> Value) -> NodeProducer {
-        return create(source: source, transform: transform)
+    static func of<Sequence: SequenceType where Sequence.Generator.Element == Value>(sequence sequence: Sequence) -> NodeProducer {
+        return makeOfElements(first: nil, middle: sequence, last: nil)
     }
     
-    class func of(value: Value) -> NodeProducer {
-        return create(element: value)
+    static func of(values first: Value, _ rest: Value...) -> NodeProducer {
+        return makeOfElements(first: first, middle: rest, last: nil)
     }
     
-    class func of<Sequence: SequenceType where Sequence.Generator.Element == Value>(sequence sequence: Sequence) -> NodeProducer {
-        return create(sequence: sequence)
-    }
-    
-    class func never() -> NodeProducer {
-        return create{ _ in nil }
-    }
-}
-
-public extension NodeProducer {
-    func startWithNode(@noescape setup: Node<Value> -> Void) {
-        return startWithTarget(setup)
-    }
-    
-    func start(observer: Node<Value>.Action? = nil) -> Disposable {
-        if let observer = observer {
-            return startWithObserver(observer)
-        } else {
-            return start()
+    func startWithNode(@noescape setup: (Node<Value>, Disposable) -> Void) {
+        return startWithProduct { product in
+            setup(product, ScopedDisposable(product))
         }
     }
+    
+    func first() -> Value {
+        return firstElement()
+    }
+}
+
+// MARK: - Node Extension
+public extension Node {
+    typealias Producer = NodeProducer<Value>
 }

@@ -9,26 +9,30 @@
 import Foundation
 
 class ControlWithCount<T>: ValueCustomOperator<T, T> {
-    let countLimit: Int
-    var controlValue = true
-    var count = 0
+    final let limit: Int
+    final var current = 0
+    final var exceeded = false
+    
+    final var completionSink: (Void -> Void)?
+    
+    var onExceedingLimit: (Void -> Void)? {
+        return nil
+    }
     
     init(_ count: Int) {
-        self.countLimit = count
+        self.limit = count
     }
     
     final func increment() {
-        self.count += 1
-        if self.count >= self.countLimit {
-            self.controlValue = false
+        current += 1
+        if current >= limit {
+            exceeded = true
+            onExceedingLimit?()
         }
     }
     
-    final override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void) {
-        return {
-            self.count = 0
-            self.controlValue = false
-            completionSink()
-        }
+    final override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
+        self.completionSink = completionSink
+        return completionSink
     }
 }

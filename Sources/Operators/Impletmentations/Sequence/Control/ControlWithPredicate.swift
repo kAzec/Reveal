@@ -10,31 +10,40 @@ import Foundation
 
 class ControlWithPredicate<T>: ValueCustomOperator<T, T> {
     private let predicate: T -> Bool
-    private var controlValue = true
+    private var succeeded = true
     
     var exceptation: Bool {
         RevealUnimplemented()
+    }
+    
+    final var completionSink: (Void -> Void)?
+    
+    var onPredicateFailure: (Void -> Void)? {
+        return nil
     }
     
     init(_ predicate: T -> Bool) {
         self.predicate = predicate
     }
     
-    final override func forward(sink: T -> Void) -> (T -> Void) {
+    final override func forward(sink: Sink) -> Source {
         let exceptation = self.exceptation
         
         return { value in
-            self.controlValue = self.controlValue && self.predicate(value)
-            if self.controlValue == exceptation {
+            if self.succeeded && !self.predicate(value) {
+                self.succeeded = false
+                
+                self.onPredicateFailure?()
+            }
+            
+            if self.succeeded == exceptation {
                 sink(value)
             }
         }
     }
     
-    final override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void) {
-        return {
-            self.controlValue = true
-            completionSink()
-        }
+    final override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
+        self.completionSink = completionSink
+        return completionSink
     }
 }

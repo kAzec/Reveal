@@ -17,7 +17,7 @@ final class Reduce<T, U>: SignalOperator<T, U> {
         self.combine = combine
     }
     
-    override func forward(sink: Signal<U>.Action) -> Signal<T>.Action {
+    override func forward(sink: Sink) -> Source {
         return { signal in
             switch signal {
             case .next(let element):

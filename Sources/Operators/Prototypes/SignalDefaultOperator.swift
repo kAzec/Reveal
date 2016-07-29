@@ -8,9 +8,9 @@
 
 import Foundation
 
-class SignalDefaultOperator<I, O>: SignalOperator<I, O> {
-    final override func forwardResponse<E>(sink: Response<O, E>.Action) -> Response<I, E>.Action {
-        let onSignal = signalForwarder(response: sink)
+class SignalDefaultOperator<IV, OV>: SignalOperator<IV, OV> {
+    final override func forwardResponse<E>(sink: Response<OV, E>.Action) -> Response<IV, E>.Action {
+        let onSignal = convertAsSignalForwarder(sink)
         
         return { response in
             switch response {

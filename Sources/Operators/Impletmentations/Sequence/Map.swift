@@ -9,13 +9,13 @@
 import Foundation
 
 final class Map<I, O>: ValueDefaultOperator<I, O> {
-    let transform: I -> O
+    private let transform: I -> O
     
-    init(transform: I -> O) {
+    init(_ transform: I -> O) {
         self.transform = transform
     }
     
-    override func forward(sink: O -> Void) -> (I -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             sink(self.transform(value))
         }

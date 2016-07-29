@@ -9,21 +9,24 @@
 import Foundation
 
 final class TakeTime<T, Scheduler: DelaySchedulerType>: ControlWithTime<T, Scheduler> {
-    private var shouldTake: AtomicBool {
-        return controlValue
-    }
-    
     override init(_ time: NSTimeInterval, scheduler: Scheduler) {
         super.init(time, scheduler: scheduler)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
-        guard timeLimit > 0 else { return { [sink] _ in let _ = sink } }
+    override func forward(sink: Sink) -> Source {
+        guard time > 0 else {
+            completionSink?()
+            return { _ in }
+        }
         
         return { value in
-            guard self.shouldTake else { return }
-            self.scheduleFlip()
+            if self.fliped { return }
+            self.scheduleFlipOnce()
             sink(value)
         }
+    }
+    
+    override var onFlip: (Void -> Void)? {
+        return completionSink
     }
 }

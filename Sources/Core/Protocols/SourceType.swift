@@ -8,18 +8,28 @@
 
 import Foundation
 
-public protocol SourceType: class {
+public protocol SourceType {
     associatedtype Element
     
-    func subscribe(observer: Element -> Void) -> Subscription<Self>
+    func subscribe(observer: Element -> Void) -> Disposable
 }
 
 public extension SourceType {
-    func connected<S: SinkType where S.Element == Element>(by sink: S) -> Subscription<Self> {
-        return sink.connect(to: self)
+    typealias Action = Element -> Void
+}
+
+public extension SourceType where Element: EventType {
+    func subscribeNext(onNext: Element.Value -> Void) -> Disposable {
+        return subscribe(Element.observer(next: onNext))
     }
     
-    func connected<S: SinkType>(by sink: S, transform: (S.Element -> Void) -> (Element -> Void)) -> Subscription<Self> {
-        return sink.connect(to: self, transform: transform)
+    func subscribeCompleted(onCompletion: Void -> Void) -> Disposable {
+        return subscribe(Element.observer(completion: onCompletion))
+    }
+}
+
+public extension SourceType where Element: ErrorableEventType {
+    func subscribeFailed(onFailure: Element.Error -> Void) -> Disposable {
+        return subscribe(Element.observer(failure: onFailure))
     }
 }

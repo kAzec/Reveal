@@ -17,7 +17,7 @@ final class Throttle<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Sche
         super.init(scheduler: scheduler)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         guard interval > 0 else {
             return sink
         }
@@ -25,8 +25,7 @@ final class Throttle<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Sche
         return { element in
             self.latest.swap { old in
                 if old == nil {
-                    self.schedule(after: self.interval) { [weak self] in
-                        guard let weakSelf = self else { return }
+                    self.schedule(after: self.interval) { weakSelf in
                         sink(weakSelf.latest.swap(nil)!)
                     }
                 }
@@ -36,10 +35,10 @@ final class Throttle<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Sche
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void)? {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void)? {
         return {
-            self.schedule {
-                self.latest.swap(nil)
+            self.schedule { weakSelf in
+                weakSelf.latest.swap(nil)
                 completionSink()
             }
         }

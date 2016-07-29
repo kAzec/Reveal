@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol OperatorType: class {
-    associatedtype Input
-    associatedtype Output
+public protocol OperatorType: class {
+    associatedtype I
+    associatedtype O
     
-    func forward(sink: Output -> Void) -> (Input -> Void)
+    func forward(sink: O -> Void) -> (I -> Void)
 }

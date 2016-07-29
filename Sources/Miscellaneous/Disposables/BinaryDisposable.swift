@@ -8,32 +8,38 @@
 
 import Foundation
 
-public final class BinaryDisposable<D1: Disposable, D2: Disposable>: Disposable {
+public final class BinaryDisposable: Disposable {
     
     private var atomicDisposed = AtomicBool(false)
+
+    var pair: (left: Disposable, right: Disposable)?
     
-    public private(set) var disposable1: D1?
-    public private(set) var disposable2: D2?
+    public var left: Disposable? {
+        return pair?.left
+    }
+    
+    public var right: Disposable? {
+        return pair?.right
+    }
     
     public var disposed: Bool {
         return atomicDisposed.boolValue
     }
     
-    init(_ disposable1: D1? = nil, _ disposable2: D2? = nil) {
-        self.disposable1 = disposable1
-        self.disposable2 = disposable2
+    init(_ disposable1: Disposable, _ disposable2: Disposable) {
+        pair = (disposable1, disposable2)
     }
 
     public func dispose() {
         if !atomicDisposed.swap(true) {
-            let disposable1 = self.disposable1!
-            let disposable2 = self.disposable2!
+            let (left, right) = pair.swap(nil)!
             
-            self.disposable1 = nil
-            self.disposable2 = nil
-            
-            disposable1.dispose()
-            disposable2.dispose()
+            left.dispose()
+            right.dispose()
         }
     }
+}
+
+public func +(lhs: Disposable, rhs: Disposable) -> BinaryDisposable {
+    return BinaryDisposable(lhs, rhs)
 }

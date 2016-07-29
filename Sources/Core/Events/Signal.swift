@@ -8,7 +8,9 @@
 
 import Foundation
 
-public enum Signal<Value> {
+public enum Signal<T>: EventType {
+    public typealias Value = T
+    
     case next(Value)
     case completed
 }
@@ -39,5 +41,15 @@ public extension Signal {
         case .completed:
             return .completed
         }
+    }
+}
+
+public extension Signal {
+    static func makeNext(value: Value) -> Signal {
+        return .next(value)
+    }
+    
+    static func makeCompleted() -> Signal {
+        return .completed
     }
 }

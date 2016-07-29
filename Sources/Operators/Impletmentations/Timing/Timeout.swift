@@ -13,6 +13,7 @@ final class Timeout<T, Scheduler: DelaySchedulerType>: ValueDefaultOperator<T, T
     private let expectation: (T -> Bool)
     private let consequence: (Void -> Void)
     private let scheduler: Scheduler
+    private var didTimeout = AtomicBool(false)
     private let disposable = SerialDisposable()
     
     init(interval: NSTimeInterval, scheduler: Scheduler, expectation: (T -> Bool), consequence: (Void -> Void)) {
@@ -26,12 +27,10 @@ final class Timeout<T, Scheduler: DelaySchedulerType>: ValueDefaultOperator<T, T
         disposable.dispose()
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
-        var didTimeout = AtomicBool(false)
-        
+    override func forward(sink: Sink) -> Source {
         func scheduleNewTimeout() {
             let scheduledDisposable = scheduler.schedule(after: interval) {
-                guard !didTimeout.swap(true) else { return }
+                if self.didTimeout.swap(true) { return }
                 
                 self.consequence()
             }

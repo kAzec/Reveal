@@ -28,6 +28,14 @@ public func filter<T>(includeValue: T -> Bool) -> ValueOperator<T, T> {
     return Filter(includeValue)
 }
 
+public func flatten<S: SequenceType>() -> ValueOperator<S, S.Generator.Element> {
+    return Flatten()
+}
+
+public func flatMap<I, S: SequenceType>(transform: I -> S) -> ValueOperator<I, S.Generator.Element> {
+    return Map(transform) + Flatten()
+}
+
 public func ignoreNil<T>() -> ValueOperator<T?, T> {
     return IgnoreNil()
 }
@@ -37,35 +45,31 @@ public func index<T>() -> ValueOperator<T, (index: Int, value: T)> {
 }
 
 public func map<I, O>(transform: I -> O) -> ValueOperator<I, O> {
-    return Map(transform: transform)
+    return Map(transform)
 }
 
-public func flatMap<I, O>(transform: I -> O?) -> ValueOperator<I, O> {
-    return Map(transform: transform) + IgnoreNil()
+public func sample<T, Source: SourceType>(with source: Source, allowRepeats: Bool = false) -> ValueOperator<T, (value: T, samplerElement: Source.Element)> {
+    return SampleWith(source, allowRepeats: allowRepeats, shouldSampleOn: nil, isSamplerTerminating: nil)
 }
 
-public func sample<T, U>(with node: Node<U>, allowRepeats: Bool = false) -> ValueOperator<T, (value: T, samplerElement: U)> {
-    return SampleWith(node, allowRepeats: allowRepeats, shouldSampleOn: nil, isSamplerTerminating: nil)
+public func sample<T, V, Source: SourceType where Source.Element == Signal<V>>(with source: Source, allowRepeats: Bool = false) -> ValueOperator<T, (value: T, samplerElement: Signal<V>)> {
+    return SampleWith(source, allowRepeats: allowRepeats, shouldSampleOn: nil, isSamplerTerminating: { $0.completing })
 }
 
-public func sample<T, U>(with stream: Stream<U>, allowRepeats: Bool = false) -> ValueOperator<T, (value: T, samplerElement: Signal<U>)> {
-    return SampleWith(stream, allowRepeats: allowRepeats, shouldSampleOn: nil, isSamplerTerminating: { $0.completing })
+public func sample<T, V, E, Source: SourceType where Source.Element == Response<V, E>>(with source: Source, allowRepeats: Bool = false) -> ValueOperator<T, (value: T, samplerElement: Response<V, E>)> {
+    return SampleWith(source, allowRepeats: allowRepeats, shouldSampleOn: { !$0.failing }, isSamplerTerminating: { $0.terminating })
 }
 
-public func sample<T, U, E>(with stream: Operation<U, E>, allowRepeats: Bool = false) -> ValueOperator<T, (value: T, samplerElement: Response<U, E>)> {
-    return SampleWith(stream, allowRepeats: allowRepeats, shouldSampleOn: { !$0.failing }, isSamplerTerminating: { $0.terminating })
+public func sample<T, Source: SourceType>(on source: Source, allowRepeats: Bool = false) -> ValueOperator<T, T> {
+    return sample(with: source) + Map{ $0.value }
 }
 
-public func sample<T, U>(on node: Node<U>, allowRepeats: Bool = false) -> ValueOperator<T, T> {
-    return SampleWith(node, allowRepeats: allowRepeats, shouldSampleOn: nil, isSamplerTerminating: nil) + Map(transform: { $0.value })
+public func sample<T, V, Source: SourceType where Source.Element == Signal<V>>(on source: Source, allowRepeats: Bool = false) -> ValueOperator<T, T> {
+    return sample(with: source) + Map{ $0.value }
 }
 
-public func sample<T, U>(on stream: Stream<U>, allowRepeats: Bool = false) -> ValueOperator<T, T> {
-    return SampleWith(stream, allowRepeats: allowRepeats, shouldSampleOn: nil, isSamplerTerminating: { $0.completing }) + Map(transform: { $0.value })
-}
-
-public func sample<T, U, E>(on stream: Operation<U, E>, allowRepeats: Bool = false) -> ValueOperator<T, T> {
-    return SampleWith(stream, allowRepeats: allowRepeats, shouldSampleOn: { !$0.failing }, isSamplerTerminating: { $0.terminating }) + Map(transform: { $0.value })
+public func sample<T, V, E: ErrorType, Source: SourceType where Source.Element == Response<V, E>>(on source: Source, allowRepeats: Bool = false) -> ValueOperator<T, T> {
+    return sample(with: source) + Map{ $0.value }
 }
 
 public func scan<I, O>(initial: O, combine: (O, I) -> O) -> ValueOperator<I, O> {
@@ -80,16 +84,12 @@ public func skip<T, Scheduler: DelaySchedulerType>(for milliseconds: NSTimeInter
     return SkipTime(milliseconds, scheduler: scheduler)
 }
 
-public func skip<T, U>(until node: Node<U>) -> ValueOperator<T, T> {
-    return SkipUntil(node, predicate: nil)
+public func skip<T, Source: SourceType>(until source: Source) -> ValueOperator<T, T> {
+    return SkipUntil(source, predicate: nil)
 }
 
-public func skip<T, U>(until stream: Stream<U>) -> ValueOperator<T, T> {
-    return SkipUntil(stream, predicate: { $0.completing })
-}
-
-public func skip<T, U, E>(until operation: Operation<U, E>) -> ValueOperator<T, T> {
-    return SkipUntil(operation, predicate: { $0.terminating})
+public func skip<T, V, E: ErrorType, Source: SourceType where Source.Element == Response<V, E>>(until source: Source) -> ValueOperator<T, T> {
+    return SkipUntil(source, predicate: { $0.failing })
 }
 
 public func skip<T>(while predicate: T -> Bool) -> ValueOperator<T, T> {
@@ -104,23 +104,19 @@ public func take<T, Scheduler: DelaySchedulerType>(for milliseconds: NSTimeInter
     return TakeTime(milliseconds, scheduler: scheduler)
 }
 
-public func take<T, U>(until node: Node<U>) -> ValueOperator<T, T> {
-    return TakeUntil(node, predicate: nil)
+public func take<T, Source: SourceType>(until source: Source) -> ValueOperator<T, T> {
+    return TakeUntil(source, predicate: nil)
 }
 
-public func take<T, U>(until stream: Stream<U>) -> ValueOperator<T, T> {
-    return TakeUntil(stream, predicate: { $0.completing })
-}
-
-public func take<T, U, E>(until operation: Operation<U, E>) -> ValueOperator<T, T> {
-    return TakeUntil(operation, predicate: { $0.terminating})
+public func take<T, V, E: ErrorType, Source: SourceType where Source.Element == Response<V, E>>(until source: Source) -> ValueOperator<T, T> {
+    return TakeUntil(source, predicate: { $0.failing })
 }
 
 public func take<T>(while predicate: T -> Bool) -> ValueOperator<T, T> {
     return TakeWhile(predicate)
 }
 
-public func takeLast<T>(count: Int) -> SignalOperator<T, T> {
+public func takeLast<T>(count: Int) -> SignalOperator<T, [T]> {
     return TakeLast(count)
 }
 

@@ -13,7 +13,7 @@ final class Distinct<T: Hashable>: ValueCustomOperator<T, T> {
     
     override init() {  }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             let hash = value.hashValue
             
@@ -24,7 +24,7 @@ final class Distinct<T: Hashable>: ValueCustomOperator<T, T> {
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void) {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
         return {
             self.hashed.removeAll()
             completionSink()

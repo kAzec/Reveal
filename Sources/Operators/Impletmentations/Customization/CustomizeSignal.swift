@@ -8,8 +8,8 @@
 
 import Foundation
 
-final class CustomizeSignal<I, O>: SignalDefaultOperator<I, O> {
-    typealias Forwarder = (Signal<I>, Signal<O> -> Void) -> Void
+final class CustomizeSignal<IV, OV>: SignalDefaultOperator<IV, OV> {
+    typealias Forwarder = (I, Sink) -> Void
     
     private let forwarder: Forwarder
     
@@ -17,7 +17,7 @@ final class CustomizeSignal<I, O>: SignalDefaultOperator<I, O> {
         self.forwarder = forwarder
     }
     
-    override func forward(sink: Signal<O>.Action) -> Signal<I> -> Void {
+    override func forward(sink: Sink) -> Source {
         return { signal in
             self.forwarder(signal, sink)
         }

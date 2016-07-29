@@ -8,7 +8,10 @@
 
 import Foundation
 
-public enum Response<Value, Error: ErrorType> {
+public enum Response<T, E: ErrorType>: ErrorableEventType {
+    public typealias Value = T
+    public typealias Error = E
+    
     case next(Value)
     case failed(Error)
     case completed
@@ -77,5 +80,19 @@ public extension Response {
         case .completed:
             return .completed
         }
+    }
+}
+
+public extension Response {
+    static func makeNext(value: Value) -> Response {
+        return .next(value)
+    }
+    
+    static func makeFailed(error: Error) -> Response {
+        return .failed(error)
+    }
+    
+    static func makeCompleted() -> Response {
+        return .completed
     }
 }

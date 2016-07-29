@@ -16,17 +16,17 @@ final class Delay<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, T, Schedul
         super.init(scheduler: scheduler)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
-            self.schedule(after: self.interval) {
+            self.schedule(after: self.interval) { _ in
                 sink(value)
             }
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: T -> Void) -> (Void -> Void)? {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void)? {
         return {
-            self.schedule(after: self.interval) {
+            self.schedule(after: self.interval) { _ in
                 completionSink()
             }
         }

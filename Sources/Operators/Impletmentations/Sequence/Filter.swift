@@ -15,7 +15,7 @@ final class Filter<T>: ValueDefaultOperator<T, T> {
         self.includeValue = includeValue
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             if self.includeValue(value) {
                 sink(value)

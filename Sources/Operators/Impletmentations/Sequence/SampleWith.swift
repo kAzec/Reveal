@@ -20,7 +20,7 @@ final class SampleWith<T, Sampler: SourceType>: ValueCustomOperator<T, (value: T
     private var completed = false
     private var samplerTerminated = false
     
-    private var samplerSubscription: Subscription<Sampler>? = nil
+    private var samplerSubscription: Disposable? = nil
 
     init(_ sampler: Sampler, allowRepeats: Bool, shouldSampleOn: (Sampler.Element -> Bool)? = nil, isSamplerTerminating: (Sampler.Element -> Bool)? = nil) {
         self.sampler = sampler
@@ -33,16 +33,16 @@ final class SampleWith<T, Sampler: SourceType>: ValueCustomOperator<T, (value: T
         samplerSubscription?.dispose()
     }
     
-    override func forward(sink: Sampled -> Void) -> (T -> Void) {
-        observeSampler(next: sink, completion: nil)
+    override func forward(sink: Sink) -> Source {
+        observeSampler(next: sink, completed: nil)
         
         return { value in
             self.latest.swap(value)
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: Sampled -> Void) -> (Void -> Void) {
-        observeSampler(next: nextSink, completion: completionSink)
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
+        observeSampler(next: valueSink, completed: completionSink)
         
         return {
             self.latest.with { _ in
@@ -57,7 +57,7 @@ final class SampleWith<T, Sampler: SourceType>: ValueCustomOperator<T, (value: T
 }
 
 extension SampleWith {
-    func observeSampler(next onNext: Sampled -> Void, completion onCompletion: (Void -> Void)?) {
+    func observeSampler(next onNext: Sampled -> Void, completed onCompletion: (Void -> Void)?) {
         func fetchLatestValue() -> T? {
             return allowRepeats ? latest.value : latest.swap(nil)
         }

@@ -16,8 +16,6 @@ public final class QueueScheduler: DateSchedulerType{
     /// Unlike UIScheduler, this scheduler supports scheduling for a future
     /// date, and will always schedule asynchronously (even if already running
     /// on the main thread).
-    public static let main = QueueScheduler(queue: dispatch_get_main_queue())
-    
     internal let queue: dispatch_queue_t
     
     internal init(queue: dispatch_queue_t) {
@@ -37,7 +35,7 @@ public final class QueueScheduler: DateSchedulerType{
     }
     
     public func schedule(action: Void -> Void) -> Disposable? {
-        let disposable = SimpleDisposable()
+        let disposable = BooleanDisposable()
         
         dispatch_async(queue) {
             if !disposable.disposed {
@@ -49,7 +47,7 @@ public final class QueueScheduler: DateSchedulerType{
     }
     
     public func schedule(after delay: NSTimeInterval, action: Void -> Void) -> Disposable? {
-        let disposable = SimpleDisposable()
+        let disposable = BooleanDisposable()
         
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
         dispatch_after(when, queue) {
@@ -78,7 +76,7 @@ public final class QueueScheduler: DateSchedulerType{
     }
     
     public func schedule(at date: NSDate, action: Void -> Void) -> Disposable? {
-        let disposable = SimpleDisposable()
+        let disposable = BooleanDisposable()
         
         dispatch_after(wallTimeWithDate(date), queue) {
             if !disposable.disposed {
@@ -126,23 +124,9 @@ public final class QueueScheduler: DateSchedulerType{
     }
 }
 
-private final class TimerDisposable: Disposable {
-    var atomicDisposed = AtomicBool(false)
-    var timer: dispatch_source_t?
-    
-    init(_ timer: dispatch_source_t) {
-        self.timer = timer
-    }
-    
-    func dispose() {
-        if !atomicDisposed.swap(true) {
-            let timer = self.timer!
-            self.timer = nil
-            dispatch_source_cancel(timer)
-        }
-    }
-    
-    var disposed: Bool {
-        return atomicDisposed.boolValue
-    }
+extension QueueScheduler {
+    static let main = QueueScheduler(queue: dispatch_get_main_queue())
+    static let userInteractive = QueueScheduler(queue: dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0))
+    static let utility = QueueScheduler(queue: dispatch_get_global_queue(QOS_CLASS_UTILITY, 0))
+    static let background = QueueScheduler(queue: dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0))
 }

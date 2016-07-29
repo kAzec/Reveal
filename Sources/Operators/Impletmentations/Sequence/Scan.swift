@@ -17,7 +17,7 @@ final class Scan<I, O>: ValueDefaultOperator<I, O> {
         self.combine = combine
     }
     
-    override func forward(sink: O -> Void) -> (I -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             self.last = self.combine(self.last, value)
             sink(self.last)

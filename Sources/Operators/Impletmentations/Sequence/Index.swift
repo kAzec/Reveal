@@ -15,7 +15,7 @@ final class Index<T>: ValueCustomOperator<T, (index: Int, value: T)> {
     
     override init() {  }
     
-    override func forward(sink: Indexed -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { value in
             self.currentIndex += 1
             let indexed = (self.currentIndex, value)
@@ -23,7 +23,7 @@ final class Index<T>: ValueCustomOperator<T, (index: Int, value: T)> {
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: Indexed -> Void) -> (Void -> Void) {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
         return {
             self.currentIndex = -1
             completionSink()

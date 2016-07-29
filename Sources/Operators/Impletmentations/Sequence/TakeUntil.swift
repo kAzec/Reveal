@@ -14,6 +14,10 @@ final class TakeUntil<T, Trigger: SourceType>: ControlWithTrigger<T, Trigger> {
     }
     
     override var exceptation: Bool {
-        return true
+        return false
+    }
+    
+    override var onTrigger: (Void -> Void)? {
+        return completionSink
     }
 }

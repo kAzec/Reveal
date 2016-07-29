@@ -11,7 +11,7 @@ import Foundation
 final class Collect<T>: SignalOperator<T, [T]> {
     private var collected = [T]()
     
-    override func forward(sink: Signal<[T]>.Action) -> Signal<T>.Action {
+    override func forward(sink: Sink) -> Source {
         return { signal in
             switch signal {
             case .next(let element):
@@ -36,7 +36,7 @@ final class CollectCount<T>: ValueCustomOperator<T, [T]> {
         countLimit = count
     }
     
-    override func forward(sink: [T] -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { element in
             if self.collect(element) {
                 sink(self.empty())
@@ -44,9 +44,9 @@ final class CollectCount<T>: ValueCustomOperator<T, [T]> {
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: [T] -> Void) -> (Void -> Void) {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
         return {
-            nextSink(self.empty())
+            valueSink(self.empty())
             completionSink()
         }
     }

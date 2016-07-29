@@ -11,22 +11,21 @@ import Foundation
 final class Coalesce<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, [T], Scheduler> {
     private let interval: NSTimeInterval
     private let coalesced = Atomic<[T]>([])
+    private let scheduledDisposable = SerialDisposable()
     
     init(interval: NSTimeInterval, scheduler: Scheduler) {
         self.interval = interval
         super.init(scheduler: scheduler)
     }
     
-    override func forward(sink: [T] -> Void) -> (T -> Void) {
+    override func forward(sink: Sink) -> Source {
         return { element in
             self.coalesced.modify { coalesced in
                 let isEmpty = coalesced.isEmpty
                 coalesced.append(element)
                 
                 if isEmpty {
-                    self.schedule(after: self.interval) { [weak self] in
-                        guard let weakSelf = self else { return }
-                        
+                    self.scheduledDisposable.innerDisposable = self.schedule(after: self.interval) { weakSelf in
                         sink(weakSelf.coalesced.swap([]))
                     }
                 }
@@ -34,12 +33,13 @@ final class Coalesce<T, Scheduler: DelaySchedulerType>: AsyncOperator<T, [T], Sc
         }
     }
     
-    override func forwardCompletion(completion completionSink: Void -> Void, next nextSink: [T] -> Void) -> (Void -> Void)? {
+    override func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void)? {
         return {
-            self.schedule {
-                let coalesced = self.coalesced.swap([])
+            self.scheduledDisposable.dispose()
+            self.schedule { weakSelf in
+                let coalesced = weakSelf.coalesced.swap([])
                 if !coalesced.isEmpty {
-                    nextSink(coalesced)
+                    valueSink(coalesced)
                 }
                 
                 completionSink()

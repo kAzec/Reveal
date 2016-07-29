@@ -13,11 +13,11 @@ final class SkipCount<T>: ControlWithCount<T> {
         super.init(count)
     }
     
-    override func forward(sink: T -> Void) -> (T -> Void) {
-        guard countLimit > 0 else { return sink }
+    override func forward(sink: Sink) -> Source {
+        guard limit > 0 else { return sink }
         
         return { value in
-            if self.controlValue {
+            if !self.exceeded {
                 self.increment()
             } else {
                 sink(value)

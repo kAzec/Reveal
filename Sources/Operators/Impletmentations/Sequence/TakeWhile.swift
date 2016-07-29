@@ -16,4 +16,8 @@ final class TakeWhile<Element>: ControlWithPredicate<Element> {
     override var exceptation: Bool {
         return true
     }
+    
+    override var onPredicateFailure: (Void -> Void)? {
+        return completionSink
+    }
 }

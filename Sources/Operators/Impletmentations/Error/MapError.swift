@@ -15,7 +15,7 @@ final class MapError<T, E: ErrorType, F: ErrorType>: ResponseOperator<T, E, T, F
         self.transform = transform
     }
     
-    override func forward(sink: Response<T, F> -> Void) -> (Response<T, E> -> Void) {
+    override func forward(sink: Sink) -> Source {
         return {
             $0.mapError(self.transform)
         }

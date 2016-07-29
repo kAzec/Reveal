@@ -8,39 +8,54 @@
 
 import Foundation
 
-public final class Node<Value>: IntermediateType {
-    public typealias Element = Value
-    public typealias Action = Element -> Void
+public final class Node<T>: BaseIntermediateType, NodeType {
+    public typealias Value = T
+    public typealias Action = Value -> Void
     
-    public private(set) var repository: Repository<Value>
+    public private(set) var subject: Subject<Value>
+    
+    public var node: Node<Value> {
+        return self
+    }
     
     public init(_ name: String) {
-        repository = Repository(lockName: name)
+        subject = Subject(lockName: name)
     }
     
     deinit {
-        repository.dispose()
+        dispose()
+    }
+    
+    public func dispose() {
+        subject.dispose()
     }
 }
 
+// MARK: - Source & Sink
 public extension Node {
-    func subscribe(observer: Observer.Action) -> Subscription<Node> {
-        return repository.append(observer, owner: self)
+    func subscribe(observer: Action) -> Disposable {
+        return subject.append(observer, owner: self)
     }
     
     func subscribed(@noescape by observee: Action -> Disposable?) {
         let subscription = observee { value in
-            guard !self.repository.disposed else { return }
+            if self.subject.disposed { return }
             
-            self.repository.synchronizedOn(value)
+            self.subject.synchronizedOn(value)
         }
             
         if let subscription = subscription {
-            repository.disposables.append(subscription)
+            subject.disposables.append(subscription)
         }
     }
+}
+
+public extension NodeType {
+    func promote() -> Stream<Value> {
+        return Stream(observee: apply(Signal.makeNext, to: subscribe))
+    }
     
-    func dispose() {
-        repository.dispose()
+    func promote<Error: ErrorType>(with error: Error.Type) -> Operation<Value, Error> {
+        return Operation(observee: apply(Response.makeNext, to: subscribe))
     }
 }

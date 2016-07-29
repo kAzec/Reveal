@@ -1,5 +1,5 @@
 //
-//  Repository.swift
+//  Subject.swift
 //  Reveal
 //
 //  Created by 锋炜 刘 on 16/7/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Repository<Element> {
+public struct Subject<Element> {
     typealias Action = Element -> Void
     
     let lock = NSLock()
@@ -54,20 +54,12 @@ public struct Repository<Element> {
         }
     }
     
-    mutating func append<O: IntermediateType>(action: Action, owner: O, failure onFailure: (Void -> Void)? = nil) -> Subscription<O> {
+    func append<O: IntermediateType>(action: Action, owner: O, failure onFailure: (Void -> Void)? = nil) -> Disposable {
         if let token = actions.modify({ $0?.append(action) }) {
-            return Subscription(source: owner) { owner in
-                owner.repository.actions.modify{ $0?.remove(for: token) }
-            }
+            return SubscriptionDisposable(source: owner, removalToken: token)
         } else {
             onFailure?()
-            return Subscription()
+            return BooleanDisposable(disposed: true)
         }
-    }
-}
-
-public extension IntermediateType {
-    var disposed: Bool {
-        return repository.disposed.boolValue
     }
 }

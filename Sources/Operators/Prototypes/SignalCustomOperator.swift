@@ -8,19 +8,20 @@
 
 import Foundation
 
-class SignalCustomOperator<I, O>: SignalOperator<I, O> {
-    func forwardFailure<E: ErrorType>(failure failureSink: E -> Void, completion completionSink: Void -> Void, next nextSink: O -> Void) -> (E -> Void) {
+// Currently no operator interits from SignalCustomOperator.
+class SignalCustomOperator<IV, OV>: SignalOperator<IV, OV> {
+    func forwarder<E: ErrorType>(failure failureSink: E -> Void, completion completionSink: Void -> Void, next valueSink: ValueSink) -> (E -> Void) {
         RevealUnimplemented()
     }
     
-    final override func forwardResponse<E>(responseSink: Response<O, E>.Action) -> Response<I, E>.Action {
-        let onSignal = signalForwarder(response: responseSink)
-        
-        let onFailure = forwardFailure(
-            failure:    { responseSink(.failed($0)) },
-            completion: { responseSink(.completed)  },
-            next:       { responseSink(.next($0))   }
+    final override func forwardResponse<E>(sink: Response<OV, E>.Action) -> Response<IV, E>.Action {
+        let onFailure = forwarder(
+            failure:    { sink(.failed($0)) },
+            completion: { sink(.completed)  },
+            next:       { sink(.next($0))   }
         )
+        
+        let onSignal = convertAsSignalForwarder(sink)
         
         return { response in
             switch response {
@@ -34,4 +35,16 @@ class SignalCustomOperator<I, O>: SignalOperator<I, O> {
         }
     }
 
+}
+
+extension SignalOperator {
+    func convertAsSignalForwarder<E>(responseSink: Response<OV, E>.Action) -> Source {
+        return forward { signal in
+            if case .next(let value) = signal {
+                responseSink(.next(value))
+            } else {
+                responseSink(.completed)
+            }
+        }
+    }
 }

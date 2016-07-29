@@ -9,7 +9,7 @@
 import Foundation
 
 class ValueCustomOperator<I, O>: ValueOperator<I, O> {
-    func forwardCompletion(completion completionSink: Void -> Void, next nextSink: O -> Void) -> (Void -> Void) {
+    func forwardCompletion(completion completionSink: Void -> Void, next valueSink: Sink) -> (Void -> Void) {
         RevealUnimplemented()
     }
     
@@ -17,18 +17,17 @@ class ValueCustomOperator<I, O>: ValueOperator<I, O> {
         let nextSink = { sink(.next($0)) }
         let completionSink = { sink(.completed) }
         
-        let onNext = forward(nextSink)
-        
         let onCompletion = forwardCompletion(
             completion: completionSink,
             next:       nextSink
         )
         
+        let onNext = forward(nextSink)
+        
         return { signal in
-            switch signal {
-            case .next(let value):
+            if case .next(let value) = signal {
                 onNext(value)
-            case .completed:
+            } else {
                 onCompletion()
             }
         }
@@ -38,12 +37,12 @@ class ValueCustomOperator<I, O>: ValueOperator<I, O> {
         let nextSink = { sink(.next($0)) }
         let completionSink = { sink(.completed) }
         
-        let onNext = forward(nextSink)
-        
         let onCompletion = forwardCompletion(
             completion: completionSink,
             next:       nextSink
         )
+
+        let onNext = forward(nextSink)
         
         return { response in
             switch response {
