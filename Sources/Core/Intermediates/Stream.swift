@@ -8,10 +8,8 @@
 
 import Foundation
 
-public final class Stream<T>: BaseIntermediateType, StreamType {
-    public typealias Value = T
+public final class Stream<Value>: BaseIntermediateType, StreamProxyType {
     public typealias Signal = Reveal.Signal<Value>
-    public typealias Element = Signal
     public typealias Action = Signal -> Void
     
     public private(set) var subject: Subject<Signal>
@@ -31,39 +29,34 @@ public final class Stream<T>: BaseIntermediateType, StreamType {
     public func dispose() {
         subject.dispose(with: .completed)
     }
+    
+    func on(signal: Signal) {
+        if subject.disposed { return }
+        
+        if case .next = signal {
+            subject.synchronized(on: signal)
+        } else {
+            subject.dispose(with: signal)
+        }
+    }
 }
 
 // MARK: - Source & Sink
 public extension Stream {
     func subscribe(observer: Action) -> Disposable {
         return subject.append(observer, owner: self) {
-            observer(.completed)
+            $0(.completed)
         }
     }
     
     func subscribed(@noescape by observee: Action -> Disposable?) {
-        let subscription = observee { signal in
-            if self.subject.disposed { return }
-            
-            if case .next = signal {
-                self.subject.synchronizedOn(signal)
-            } else {
-                self.subject.dispose(with: signal)
-            }
-        }
-        
-        if let subscription = subscription {
-            if subject.disposed {
-                subscription.dispose()
-            } else {
-                subject.disposables.append(subscription)
-            }
-        }
+        if subject.disposed { return }
+        subject.disposables += observee(on)
     }
 }
 
-public extension StreamType {
+public extension StreamProxyType {
     func promote<Error: ErrorType>(with error: Error.Type) -> Operation<Value, Error> {
-        return Operation(observee: apply(Response.makeWithEvent, to: subscribe))
+        return Operation(observee: apply(Response.makeWithEvent, to: stream.subscribe))
     }
 }

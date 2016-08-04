@@ -8,36 +8,38 @@
 
 import Foundation
 
-final class SubscriptionDisposable<I: IntermediateType>: Disposable {
-    var atomicDisposed: AtomicBool
+final class SubscriptionDisposable<Source: BaseIntermediateType>: Disposable {
+    private weak var source: Source?
+    private let removalToken: UInt
+    private var atomicDisposed = AtomicBool(false)
     
-    weak var source: I?
-    var removalToken: UInt?
-    
-    init() {
-        source = nil
-        removalToken = nil
-        atomicDisposed = AtomicBool(true)
-    }
-    
-    init(source: I, removalToken: UInt) {
+    init(source: Source, removalToken: UInt) {
         self.source = source
         self.removalToken = removalToken
-        atomicDisposed = AtomicBool(false)
     }
     
     var disposed: Bool {
-        return atomicDisposed.boolValue
+        if atomicDisposed.boolValue {
+            return true
+        }
+        
+        if source?.subject.disposed.boolValue ?? true {
+            atomicDisposed.swap(true)
+            return true
+        }
+        
+        return false
     }
     
     func dispose() {
         if atomicDisposed.swap(true) { return }
         
-        source?.subject.actions.modify { actions in
-            actions?.remove(for: removalToken!)
+        if let source = source where !source.subject.disposed {
+            source.subject.actions.modify { actions in
+                actions?.remove(for: removalToken)
+            }
         }
         
         source = nil
-        removalToken = nil
     }
 }

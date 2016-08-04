@@ -18,11 +18,11 @@ public struct NodeProducer<Value>: ProducerType {
     }
     
     public func startWithProduct(@noescape setup: Product -> Void) {
-        startWithProduct(setup, producerHandler: producerHandler)
+        startWithProduct(producerHandler, setup: setup)
     }
     
-    func lift<U>(forwarder: IO<Value, U>.Raw) -> NodeProducer<U> {
-        return NodeProducer<U>(producerHandler, forwarder)
+    func lift<P: ProducerType>(forwarder: IO<Value, P.Product.Element>.A) -> P {
+        return P(producerHandler, forwarder)
     }
 }
 

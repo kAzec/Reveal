@@ -33,6 +33,7 @@ public final class SerialDisposable: Disposable {
     
     public init(_ disposable: Disposable? = nil) {
         self.atomicDisposable = Atomic(disposable)
+        print("\(self) inited with \(disposable)")
     }
     
     public func dispose() {
@@ -41,5 +42,7 @@ public final class SerialDisposable: Disposable {
         if let disposable = atomicDisposable.swap(nil) {
             disposable.dispose()
         }
+        
+        print("\(self) disposed")
     }
 }

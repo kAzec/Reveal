@@ -42,8 +42,6 @@ final class TakeLast<T>: SignalDefaultOperator<T, [T]> {
 final class TakeLastOne<T>: SignalDefaultOperator<T, T> {
     private var buffer: T?
     
-    override init() {  }
-    
     override func forward(sink: Sink) -> Source {
         return { signal in
             switch signal {

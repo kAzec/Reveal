@@ -15,8 +15,8 @@ public enum CombineStrategy {
 
 // MARK: - Combine Functions
 
-// MARK: NodeType
-public func combine<A: NodeType, B: NodeType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Node<(A.Value, B.Value)> {
+// MARK: NodeProxyType
+public func combine<A: NodeProxyType, B: NodeProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Node<(A.Value, B.Value)> {
     switch strategy {
     case .zip:
         return combine(ZipState(), a, b)
@@ -25,20 +25,20 @@ public func combine<A: NodeType, B: NodeType>(strategy: CombineStrategy, _ a: A,
     }
 }
 
-public func combine<A: NodeType, B: StreamType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
+public func combine<A: NodeProxyType, B: StreamProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
     return combine(strategy, a.promote(), b)
 }
 
-public func combine<A: NodeType, B: OperationType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), B.Error> {
+public func combine<A: NodeProxyType, B: OperationProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), B.Error> {
     return combine(strategy, a.promote(with: B.Error.self), b)
 }
 
-// MARK: StreamType
-public func combine<A: StreamType, B: NodeType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
+// MARK: StreamProxyType
+public func combine<A: StreamProxyType, B: NodeProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
     return combine(strategy, a, b.promote())
 }
 
-public func combine<A: StreamType, B: StreamType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
+public func combine<A: StreamProxyType, B: StreamProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
     switch strategy {
     case .zip:
         return combine(ZipState(), a, b)
@@ -47,20 +47,20 @@ public func combine<A: StreamType, B: StreamType>(strategy: CombineStrategy, _ a
     }
 }
 
-public func combine<A: StreamType, B: OperationType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), B.Error> {
+public func combine<A: StreamProxyType, B: OperationProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), B.Error> {
     return combine(strategy, a.promote(with: B.Error.self), b)
 }
 
-// MARK: OperationType
-public func combine<A: OperationType, B: NodeType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
+// MARK: OperationProxyType
+public func combine<A: OperationProxyType, B: NodeProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
     return combine(strategy, a, b.promote(with: A.Error.self))
 }
 
-public func combine<A: OperationType, B: StreamType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
+public func combine<A: OperationProxyType, B: StreamProxyType>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
     return combine(strategy, a, b.promote(with: A.Error.self))
 }
 
-public func combine<A: OperationType, B: OperationType where A.Error == B.Error>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
+public func combine<A: OperationProxyType, B: OperationProxyType where A.Error == B.Error>(strategy: CombineStrategy, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
     switch strategy {
     case .zip:
         return combine(ZipState(), a, b)
@@ -71,57 +71,57 @@ public func combine<A: OperationType, B: OperationType where A.Error == B.Error>
 
 // MARK: - Combine Extensions
 
-// MARK: NodeType Extensions
-public extension NodeType {
-    func combineWith<N: NodeType>(strategy: CombineStrategy, _ node: N) -> Node<(Value, N.Value)> {
+// MARK: NodeProxyType Extensions
+public extension NodeProxyType {
+    func combineWith<N: NodeProxyType>(strategy: CombineStrategy, _ node: N) -> Node<(Value, N.Value)> {
         return combine(strategy, self, node)
     }
     
-    func combineWith<S: StreamType>(strategy: CombineStrategy, _ stream: S) -> Stream<(Value, S.Value)> {
+    func combineWith<S: StreamProxyType>(strategy: CombineStrategy, _ stream: S) -> Stream<(Value, S.Value)> {
         return combine(strategy, self.promote(), stream)
     }
     
-    func combineWith<O: OperationType>(strategy: CombineStrategy, _ operation: O) -> Operation<(Value, O.Value), O.Error> {
+    func combineWith<O: OperationProxyType>(strategy: CombineStrategy, _ operation: O) -> Operation<(Value, O.Value), O.Error> {
         return combine(strategy, self.promote(with: O.Error.self), operation)
     }
 }
 
-// MARK: StreamType Extensions
-public extension StreamType {
-    func combineWith<N: NodeType>(strategy: CombineStrategy, _ node: N) -> Stream<(Value, N.Value)> {
+// MARK: StreamProxyType Extensions
+public extension StreamProxyType {
+    func combineWith<N: NodeProxyType>(strategy: CombineStrategy, _ node: N) -> Stream<(Value, N.Value)> {
         return combine(strategy, self, node.promote())
     }
     
-    func combineWith<S: StreamType>(strategy: CombineStrategy, _ stream: S) -> Stream<(Value, S.Value)> {
+    func combineWith<S: StreamProxyType>(strategy: CombineStrategy, _ stream: S) -> Stream<(Value, S.Value)> {
         return combine(strategy, self, stream)
     }
     
-    func combineWith<O: OperationType>(strategy: CombineStrategy, _ operation: O) -> Operation<(Value, O.Value), O.Error> {
+    func combineWith<O: OperationProxyType>(strategy: CombineStrategy, _ operation: O) -> Operation<(Value, O.Value), O.Error> {
         return combine(strategy, self.promote(with: O.Error.self), operation)
     }
 }
 
-// MARK: OperationType Extensions
-public extension OperationType {
-    func combineWith<N: NodeType>(strategy: CombineStrategy, _ node: N) -> Operation<(Value, N.Value), Error> {
+// MARK: OperationProxyType Extensions
+public extension OperationProxyType {
+    func combineWith<N: NodeProxyType>(strategy: CombineStrategy, _ node: N) -> Operation<(Value, N.Value), Error> {
         return combine(strategy, self, node.promote(with: Error.self))
     }
     
-    func combineWith<S: StreamType>(strategy: CombineStrategy, _ stream: S) -> Operation<(Value, S.Value), Error> {
+    func combineWith<S: StreamProxyType>(strategy: CombineStrategy, _ stream: S) -> Operation<(Value, S.Value), Error> {
         return combine(strategy, self, stream.promote(with: Error.self))
     }
     
-    func combineWith<O: OperationType where O.Error == Error>(strategy: CombineStrategy, _ operation: O) -> Operation<(Value, O.Value), Error> {
+    func combineWith<O: OperationProxyType where O.Error == Error>(strategy: CombineStrategy, _ operation: O) -> Operation<(Value, O.Value), Error> {
         return combine(strategy, self, operation)
     }
 }
 
 // MARK: - Privates
-private func combine<State: CombineStateType, A: NodeType, B: NodeType where State.Left == A.Value, State.Right == B.Value>(state: State, _ a: A, _ b: B) -> Node<(A.Value, B.Value)> {
-    return Node(String(State)) { sink in
-        var flush = CombineSink<State, NoError>(
+private func combine<State: CombineStateType, A: NodeProxyType, B: NodeProxyType where State.Left == A.Value, State.Right == B.Value>(state: State, _ a: A, _ b: B) -> Node<(A.Value, B.Value)> {
+    return Node(String(state)) { observer in
+        var flush = CombineSink<State, NotAnError>(
             state:      state,
-            next:       { sink($0.0, $0.1) },
+            next:       { observer($0.0, $0.1) },
             completion: nil,
             failure:    nil
         )
@@ -134,12 +134,12 @@ private func combine<State: CombineStateType, A: NodeType, B: NodeType where Sta
     }
 }
 
-private func combine<State: CombineStateType, A: StreamType, B: StreamType where State.Left == A.Value, State.Right == B.Value>(state: State, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
-    return Stream(String(State)) { sink in
-        var flush = CombineSink<State, NoError>(
+private func combine<State: CombineStateType, A: StreamProxyType, B: StreamProxyType where State.Left == A.Value, State.Right == B.Value>(state: State, _ a: A, _ b: B) -> Stream<(A.Value, B.Value)> {
+    return Stream(String(state)) { observer in
+        var flush = CombineSink<State, NotAnError>(
             state:      state,
-            next:       { sink(.next($0)) },
-            completion: { sink(.completed) },
+            next:       { observer(.next($0)) },
+            completion: { observer(.completed) },
             failure:    nil
         )
         
@@ -159,13 +159,13 @@ private func combine<State: CombineStateType, A: StreamType, B: StreamType where
     }
 }
 
-private func combine<State: CombineStateType, A: OperationType, B: OperationType where A.Error == B.Error, State.Left == A.Value, State.Right == B.Value>(state: State, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
-    return Operation(String(State)) { sink in
+private func combine<State: CombineStateType, A: OperationProxyType, B: OperationProxyType where A.Error == B.Error, State.Left == A.Value, State.Right == B.Value>(state: State, _ a: A, _ b: B) -> Operation<(A.Value, B.Value), A.Error> {
+    return Operation(String(state)) { observer in
         var flush = CombineSink<State, A.Error>(
             state:      state,
-            next:       { sink(.next($0)) },
-            completion: { sink(.completed) },
-            failure:    { sink(.failed($0)) }
+            next:       { observer(.next($0)) },
+            completion: { observer(.completed) },
+            failure:    { observer(.failed($0)) }
         )
         
         return a.subscribe { response in
@@ -190,7 +190,7 @@ private func combine<State: CombineStateType, A: OperationType, B: OperationType
     }
 }
 
-private protocol CombineStateType {
+private protocol CombineStateType: CustomStringConvertible {
     associatedtype Left
     associatedtype Right
     
@@ -242,6 +242,10 @@ private struct ZipState<Left, Right>: CombineStateType {
             return pair()
         }
     }
+    
+    var description: String {
+        return "Zip<\(String(Left)), \(String(Right))>"
+    }
 }
 
 private struct CombineLatestState<Left, Right>: CombineStateType {
@@ -269,6 +273,10 @@ private struct CombineLatestState<Left, Right>: CombineStateType {
             return (left, right)
         } else { return nil }
     }
+    
+    var description: String {
+        return "CombineLatest<\(String(Left)), \(String(Right))>"
+    }
 }
 
 private enum CombineEvent<Left, Right, Error: ErrorType> {
@@ -279,7 +287,7 @@ private enum CombineEvent<Left, Right, Error: ErrorType> {
     case failed(Error)
 }
 
-private enum NoError: ErrorType {  }
+enum NotAnError: ErrorType {  }
 
 private struct CombineSink<State: CombineStateType, Error: ErrorType> {
     typealias Left = State.Left

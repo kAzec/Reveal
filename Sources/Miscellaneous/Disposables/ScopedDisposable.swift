@@ -14,16 +14,7 @@ public final class ScopedDisposable: Disposable {
     public private(set) weak var innerDisposable: Disposable?
     
     public var disposed: Bool {
-        if let disposable = innerDisposable {
-            if disposable.disposed {
-                innerDisposable = nil
-                return true
-            } else {
-                return true
-            }
-        } else {
-            return false
-        }
+        return innerDisposable?.disposed ?? true
     }
     
     /// Initialize the receiver to dispose of the argument upon

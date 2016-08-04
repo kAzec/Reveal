@@ -19,11 +19,11 @@ public struct StreamProducer<Value>: ProducerType {
     }
     
     public func startWithProduct(@noescape setup: Product -> Void) {
-        startWithProduct(setup, producerHandler: producerHandler)
+        startWithProduct(producerHandler, setup: setup)
     }
     
-    func lift<U>(forwarder: IO<Signal, Reveal.Signal<U>>.Raw) -> StreamProducer<U> {
-        return StreamProducer<U>(producerHandler, forwarder)
+    func lift<P: ProducerType>(forwarder: IO<Signal, P.Product.Element>.A) -> P {
+        return P(producerHandler, forwarder)
     }
 }
 

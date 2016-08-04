@@ -39,11 +39,13 @@ public protocol DisposableCollectorOwnerType {
 }
 
 public extension Disposable {
-    func dispose(in collector: DisposableCollector) {
+    func dispose(in collector: DisposableCollector) -> Self {
         collector.collect(self)
+        return self
     }
     
-    func dispose<Owner: DisposableCollectorOwnerType>(in collectorOwner: Owner) {
+    func dispose<Owner: DisposableCollectorOwnerType>(with collectorOwner: Owner) -> Self {
         collectorOwner.disposableCollector.collect(self)
+        return self
     }
 }

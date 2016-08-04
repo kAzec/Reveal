@@ -11,7 +11,7 @@ import Foundation
 class ControlWithTrigger<T, Trigger: SourceType>: ValueCustomOperator<T, T> {
     private let trigger: Trigger
     private let predicate: (Trigger.Element -> Bool)?
-    private var subscription: Disposable?
+    private var subscription: Disposable!
     
     private var triggered = false
     private let lock = NSLock()
@@ -33,7 +33,7 @@ class ControlWithTrigger<T, Trigger: SourceType>: ValueCustomOperator<T, T> {
     }
     
     deinit {
-        subscription?.dispose()
+        subscription.dispose()
     }
     
     final override func forward(sink: Sink) -> Source {
@@ -41,7 +41,7 @@ class ControlWithTrigger<T, Trigger: SourceType>: ValueCustomOperator<T, T> {
             guard !self.triggered else { return }
             
             if self.predicate?(value) ?? false {
-                self.subscription!.dispose()
+                self.subscription.dispose()
             } else {
                 self.lock.lock()
                 defer { self.lock.unlock() }

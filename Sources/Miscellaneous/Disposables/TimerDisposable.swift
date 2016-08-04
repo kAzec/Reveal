@@ -17,11 +17,11 @@ final class TimerDisposable: Disposable {
     }
     
     func dispose() {
-        if !atomicDisposed.swap(true) {
-            let timer = self.timer!
-            self.timer = nil
-            dispatch_source_cancel(timer)
-        }
+        if atomicDisposed.swap(true) { return }
+        
+        let timer = self.timer!
+        self.timer = nil
+        dispatch_source_cancel(timer)
     }
     
     var disposed: Bool {

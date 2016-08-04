@@ -45,7 +45,7 @@ public struct Bag<Element> {
         var removalIndex: Int
         
         if first == last {
-            removalIndex = Int(first)
+            removalIndex = 0
         } else {
             removalIndex = Int((UInt(count - 1)) * (token - first) / (last - first))
             

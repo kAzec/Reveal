@@ -8,9 +8,11 @@
 
 import Foundation
 
-final class TimeoutWithError<T, E: ErrorType, Scheduler: DelaySchedulerType>: ResponseOperator<T, E, T, E> {
+final class TimeoutWithError<T, E: ErrorType, Scheduler: DelaySchedulerType>: ResponseOperator<T, E, T, E>, AsyncType {
+    let lock = NSLock()
+    let scheduler: Scheduler
+
     private let interval: NSTimeInterval
-    private let scheduler: Scheduler
     private let error: E
     private let expectation: (T -> Bool)?
     private let consequence: (Void -> Void)?
@@ -20,6 +22,7 @@ final class TimeoutWithError<T, E: ErrorType, Scheduler: DelaySchedulerType>: Re
     init(interval: NSTimeInterval, scheduler: Scheduler, error: E, expectation: (T -> Bool)?, consequence: (Void -> Void)?) {
         self.interval = interval
         self.scheduler = scheduler
+        lock.name = String(TimeoutWithError)
         self.error = error
         self.expectation = expectation
         self.consequence = consequence

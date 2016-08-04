@@ -9,19 +9,22 @@
 import Foundation
 
 // MARK: - ActiveType
-public protocol ActiveType: IntermediateOwnerType {
+public protocol ActiveType: ProxyType {
+    associatedtype Proxy: BaseIntermediateType
+    
     init(_ name: String)
-    func send(element: Owned.Element)
+    
+    func send(element: Proxy.Element)
 }
 
 public extension ActiveType {
     init() {
-        self.init(String(self.dynamicType))
+        self.init(String(Self))
     }
 }
 
-public extension ActiveType where Owned.Element: EventType {
-    typealias Value = Owned.Element.Value
+public extension ActiveType where Proxy.Element: EventType {
+    typealias Value = Proxy.Element.Value
     
     func sendNext(value: Value) {
         send(.makeNext(value))
@@ -37,8 +40,8 @@ public extension ActiveType where Owned.Element: EventType {
     }
 }
 
-public extension ActiveType where Owned.Element: ErrorableEventType {
-    typealias Error = Owned.Element.Error
+public extension ActiveType where Proxy.Element: ErrorableEventType {
+    typealias Error = Proxy.Element.Error
     
     func sendFailure(error: Error) {
         send(.makeFailed(error))

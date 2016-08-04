@@ -19,11 +19,11 @@ public struct OperationProducer<Value, Error: ErrorType>: ProducerType {
     }
     
     public func startWithProduct(@noescape setup: Product -> Void) {
-        startWithProduct(setup, producerHandler: producerHandler)
+        startWithProduct(producerHandler, setup: setup)
     }
     
-    func lift<U, F>(forwarder: IO<Response, Reveal.Response<U, F>>.Raw) -> OperationProducer<U, F> {
-        return OperationProducer<U, F>(producerHandler, forwarder)
+    func lift<P: ProducerType>(forwarder: IO<Response, P.Product.Element>.A) -> P {
+        return P(producerHandler, forwarder)
     }
 }
 
@@ -35,6 +35,11 @@ public extension OperationProducer {
     }
 
     func startWithFailed(onFailure: Error -> Void) -> Disposable {
+        return start(Response.observer(failure: onFailure))
+    }
+    
+    @available(*, unavailable, renamed="startWithFailed", message="This method exists only to satisfy conformance to protocol.")
+    func subscribeFailed(onFailure: Error -> Void) -> Disposable {
         return start(Response.observer(failure: onFailure))
     }
     
@@ -58,7 +63,7 @@ public extension OperationProducer {
         return makeOfElement(.failed(error))
     }
     
-    static func operate(on operation: Void -> Result<Product.Element.Value, Error>) -> OperationProducer {
+    static func startWithOperation(operation: Void -> Result<Product.Element.Value, Error>) -> OperationProducer {
         return self.init { observer, _ in
             switch operation() {
             case .success(let result):

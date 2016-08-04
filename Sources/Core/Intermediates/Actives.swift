@@ -8,58 +8,47 @@
 
 import Foundation
 
-// MARK: - Generic Active class
-public class Active<Base: BaseIntermediateType>: ActiveType {
-    public let intermediate: Base
-    let sink: Base.Element -> Void
-    
-    public required init(_ name: String) {
-        intermediate = Base(name)
-        
-        var sink: (Base.Element -> Void)!
-        
-        intermediate.subscribed {
-            sink = $0
-            return nil
-        }
-        
-        self.sink = sink
-    }
-    
-    public final func send(element: Base.Element) {
-        sink(element)
-    }
-}
-
 // MARK: - ActiveNode class
-public final class ActiveNode<T>: Active<Node<T>>, NodeType {
-    public var node: Node<T> {
-        return intermediate
+public struct ActiveNode<Value>: ActiveType, NodeProxyType {
+    public typealias Proxy = Node<Value>
+    
+    public let node: Node<Value>
+    
+    public init(_ name: String) {
+        node = Node(name)
     }
     
-    public required init(_ name: String) {
-        super.init(name)
+    public func send(value: Value) {
+        node.on(value)
     }
 }
 
 // MARK: - ActiveStream class
-public final class ActiveStream<T>: Active<Stream<T>>, StreamType {
-    public var stream: Stream<T> {
-        return intermediate
+public struct ActiveStream<Value>: ActiveType, StreamProxyType {
+    public typealias Proxy = Stream<Value>
+    
+    public let stream: Stream<Value>
+    
+    public init(_ name: String) {
+        stream = Stream(name)
     }
     
-    public required init(_ name: String) {
-        super.init(name)
+    public func send(signal: Signal<Value>) {
+        stream.on(signal)
     }
 }
 
 // MARK: - ActiveOperation class
-public final class ActiveOperation<T, E: ErrorType>: Active<Operation<T, E>>, OperationType {
-    public var operation: Operation<T, E> {
-        return intermediate
+public struct ActiveOperation<Value, Error: ErrorType>: ActiveType, OperationProxyType {
+    public typealias Proxy = Operation<Value, Error>
+    
+    public let operation: Operation<Value, Error>
+    
+    public init(_ name: String) {
+        operation = Operation(name)
     }
     
-    public required init(_ name: String) {
-        super.init(name)
+    public func send(response: Response<Value, Error>) {
+        operation.on(response)
     }
 }

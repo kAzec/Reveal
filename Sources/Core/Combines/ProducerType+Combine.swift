@@ -10,55 +10,55 @@ import Foundation
 
 public func combine<A, B>(strategy: CombineStrategy, _ a: NodeProducer<A>, _ b: NodeProducer<B>) -> NodeProducer<(A, B)> {
     return NodeProducer {
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B>(strategy: CombineStrategy, _ a: NodeProducer<A>, _ b: StreamProducer<B>) -> StreamProducer<(A, B)> {
     return StreamProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B, E>(strategy: CombineStrategy, _ a: NodeProducer<A>, _ b: OperationProducer<B, E>) -> OperationProducer<(A, B), E> {
     return OperationProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B>(strategy: CombineStrategy, _ a: StreamProducer<A>, _ b: NodeProducer<B>) -> StreamProducer<(A, B)> {
     return StreamProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B>(strategy: CombineStrategy, _ a: StreamProducer<A>, _ b: StreamProducer<B>) -> StreamProducer<(A, B)> {
     return StreamProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B, E>(strategy: CombineStrategy, _ a: StreamProducer<A>, _ b: OperationProducer<B, E>) -> OperationProducer<(A, B), E> {
     return OperationProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B, E>(strategy: CombineStrategy, _ a: OperationProducer<A, E>, _ b: NodeProducer<B>) -> OperationProducer<(A, B), E> {
     return OperationProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B, E>(strategy: CombineStrategy, _ a: OperationProducer<A, E>, _ b: StreamProducer<B>) -> OperationProducer<(A, B), E> {
     return OperationProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
 public func combine<A, B, E>(strategy: CombineStrategy, _ a: OperationProducer<A, E>, _ b: OperationProducer<B, E>) -> OperationProducer<(A, B), E> {
     return OperationProducer { 
-        makeCombine(a, b, combine, strategy, $0)
+        makeCombine(a, b, combine, strategy, $0, $1)
     }
 }
 
@@ -104,8 +104,13 @@ public extension OperationProducer {
     }
 }
 
-private func makeCombine<P1: ProducerType, P2: ProducerType, R: BaseIntermediateType>(producer1: P1, _ producer2: P2, @noescape _ combine: (CombineStrategy, P1.Product, P2.Product) -> R, _ strategy: CombineStrategy, _ observer: R.Element -> Void) -> Disposable {
-    let (product1, product2) = (producer1.makeProduct(), producer2.makeProduct())
-    combine(strategy, product1, product2).subscribe(observer)
-    return BinaryDisposable(product1, product2)
+private func makeCombine<P1: ProducerType, P2: ProducerType, R: BaseIntermediateType>(producer1: P1, _ producer2: P2, @noescape _ combine: (CombineStrategy, P1.Product, P2.Product) -> R, _ strategy: CombineStrategy, _ observer: R.Element -> Void, _ disposables: CompositeDisposable) {
+    
+    producer1.startWithProduct { product1 in
+        disposables += ScopedDisposable(product1)
+        producer2.startWithProduct { product2 in
+            disposables += ScopedDisposable(product2)
+            disposables += combine(strategy, product1, product2).subscribe(observer)
+        }
+    }
 }

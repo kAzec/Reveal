@@ -26,7 +26,7 @@ public struct Subject<Element> {
         }
     }
     
-    func synchronizedOn(element: Element) {
+    func synchronized(on element: Element) {
         lock.lock()
         defer { lock.unlock() }
         
@@ -54,11 +54,11 @@ public struct Subject<Element> {
         }
     }
     
-    func append<O: IntermediateType>(action: Action, owner: O, failure onFailure: (Void -> Void)? = nil) -> Disposable {
+    func append<O: BaseIntermediateType>(action: Action, owner: O, failure onFailure: (Action -> Void)? = nil) -> Disposable {
         if let token = actions.modify({ $0?.append(action) }) {
             return SubscriptionDisposable(source: owner, removalToken: token)
         } else {
-            onFailure?()
+            onFailure?(action)
             return BooleanDisposable(disposed: true)
         }
     }

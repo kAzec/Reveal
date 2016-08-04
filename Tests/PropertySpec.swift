@@ -15,7 +15,15 @@ class PropertySpec: QuickSpec {
         
         describe("Producer of property") {
             it("should emit current value on start") {
-                property1.producer()
+                var currentValue: Int?
+                
+                property1.producer().start { signal in
+                    if let value = signal.next {
+                        currentValue = value
+                    }
+                }
+                
+                expect(currentValue!).to(equal(property1.value))
             }
         }
         
@@ -72,4 +80,8 @@ class PropertySpec: QuickSpec {
             }
         }
     }
+}
+
+enum TestError: ErrorType {
+    
 }

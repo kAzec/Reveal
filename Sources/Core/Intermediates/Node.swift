@@ -8,8 +8,7 @@
 
 import Foundation
 
-public final class Node<T>: BaseIntermediateType, NodeType {
-    public typealias Value = T
+public final class Node<Value>: BaseIntermediateType, NodeProxyType {
     public typealias Action = Value -> Void
     
     public private(set) var subject: Subject<Value>
@@ -29,6 +28,12 @@ public final class Node<T>: BaseIntermediateType, NodeType {
     public func dispose() {
         subject.dispose()
     }
+    
+    func on(value: Value) {
+        if subject.disposed { return }
+        
+        subject.synchronized(on: value)
+    }
 }
 
 // MARK: - Source & Sink
@@ -38,24 +43,17 @@ public extension Node {
     }
     
     func subscribed(@noescape by observee: Action -> Disposable?) {
-        let subscription = observee { value in
-            if self.subject.disposed { return }
-            
-            self.subject.synchronizedOn(value)
-        }
-            
-        if let subscription = subscription {
-            subject.disposables.append(subscription)
-        }
+        if subject.disposed { return }
+        subject.disposables += observee(on)
     }
 }
 
-public extension NodeType {
+public extension NodeProxyType {
     func promote() -> Stream<Value> {
-        return Stream(observee: apply(Signal.makeNext, to: subscribe))
+        return Stream(observee: apply(Signal.makeNext, to: node.subscribe))
     }
     
     func promote<Error: ErrorType>(with error: Error.Type) -> Operation<Value, Error> {
-        return Operation(observee: apply(Response.makeNext, to: subscribe))
+        return Operation(observee: apply(Response.makeNext, to: node.subscribe))
     }
 }

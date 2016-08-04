@@ -24,7 +24,6 @@ public final class AnonymousDisposable: Disposable {
     public func dispose() {
         if atomicDisposed.swap(true) { return }
         
-        handler?()
-        handler = nil
+        handler.swap(nil)!()
     }
 }

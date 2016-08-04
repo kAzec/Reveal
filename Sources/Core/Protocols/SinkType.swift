@@ -13,3 +13,15 @@ public protocol SinkType {
     
     func subscribed(@noescape by observee: (Element -> Void) -> Disposable?)
 }
+
+extension SinkType {
+    func subscribed(@noescape by observee: (Element -> Void) -> Disposable?) -> Disposable? {
+        var disposable: Disposable?
+        subscribed { observer in
+            disposable = observee(observer)
+            return disposable
+        }
+        
+        return disposable
+    }
+}

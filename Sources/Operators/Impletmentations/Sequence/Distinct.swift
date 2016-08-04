@@ -11,8 +11,6 @@ import Foundation
 final class Distinct<T: Hashable>: ValueCustomOperator<T, T> {
     private var hashed = Set<Int>()
     
-    override init() {  }
-    
     override func forward(sink: Sink) -> Source {
         return { value in
             let hash = value.hashValue

@@ -8,10 +8,7 @@
 
 import Foundation
 
-public final class Property<T>: PropertyType {
-    public typealias Value = T
-    public typealias Action = Value -> Void
-
+public final class Property<Value>: PropertyType {
     var underlayingValue: Value
     
     public var value: Value {
@@ -20,42 +17,51 @@ public final class Property<T>: PropertyType {
         }
         
         set {
-            // To avoid endless loop of two-way binding.
-            if node.subject.lock.tryLock() {
-                defer { node.subject.lock.unlock() }
-                
-                underlayingValue = newValue
-                node.subject.on(newValue)
-            }
+            on(.next(newValue))
         }
     }
     
-    public let node: Node<Value>
-    
-    public var intermediate: Node<Value> {
-        return node
-    }
+    public let stream: Stream<Value>
     
     public init(_ name: String, initialValue: Value) {
-        node = Node(name)
+        stream = Stream(name)
         underlayingValue = initialValue
     }
     
     public convenience init(_ inititalValue: Value) {
         self.init(String(Property), initialValue: inititalValue)
     }
-}
-
-public extension Property {
-    func subscribed(@noescape by observee: Action -> Disposable?) {
-        let subscription = observee { newValue in
-            if self.node.subject.disposed { return }
-            
-            self.value = newValue
+    
+    deinit {
+        stream.dispose()
+    }
+    
+    public func producer() -> StreamProducer<Value> {
+        return StreamProducer { [weak self] observer, disposable in
+            if let weakSelf = self {
+                observer(.next(weakSelf.value))
+                disposable += weakSelf.subscribe(observer)
+            } else {
+                observer(.completed)
+            }
         }
+    }
+    
+    public func subscribed(@noescape by observee: Signal<Value>.Action -> Disposable?) {
+        if stream.subject.disposed { return }
+        stream.subject.disposables += observee(on)
+    }
+    
+    func on(signal: Signal<Value>) {
+        if stream.subject.disposed { return }
         
-        if let subscription = subscription {
-            node.subject.disposables.append(subscription)
+        // To avoid endless loop of two-way binding.
+        if case .next(let newValue) = signal where stream.subject.lock.tryLock() {
+            defer { stream.subject.lock.unlock() }
+            underlayingValue = newValue
+            stream.subject.on(signal)
+        } else {
+            stream.subject.disposables.prune()
         }
     }
 }

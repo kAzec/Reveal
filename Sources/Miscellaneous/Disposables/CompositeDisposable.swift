@@ -56,16 +56,23 @@ public final class CompositeDisposable: Disposable {
     }
     
     public func dispose() {
-        if atomicDisposed { return }
-        
+        if atomicDisposed.swap(true) { return }
         for disposable in atomicDisposables.swap(nil)!.reverse() {
             disposable.dispose()
         }
     }
 }
 
-public func += (lhs: CompositeDisposable, rhs: Disposable?) {
+public func +=(lhs: CompositeDisposable, rhs: Disposable?) {
     if let disposable = rhs {
         lhs.append(disposable)
     }
+}
+
+public func +=(lhs: CompositeDisposable, rhs: Disposable) {
+    lhs.append(rhs)
+}
+
+public func +=(lhs: CompositeDisposable, rhs: Void -> Void) {
+    lhs.append(AnonymousDisposable(rhs))
 }

@@ -8,18 +8,12 @@
 
 import Foundation
 
-public final class AnyOperator<I, O>: OperatorType {
+public class AnyOperator<I, O>: OperatorType {
     public typealias Source = I -> Void
     public typealias Sink = O -> Void
     
-    private let forwarder: Sink -> Source
-    
-    init(_ forwarder: Sink -> Source) {
-        self.forwarder = forwarder
-    }
-    
     public func forward(sink: Sink) -> Source {
-        return forwarder(sink)
+        RevealUnimplemented()
     }
 }
 

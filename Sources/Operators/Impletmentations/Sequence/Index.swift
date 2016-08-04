@@ -13,8 +13,6 @@ final class Index<T>: ValueCustomOperator<T, (index: Int, value: T)> {
     
     private var currentIndex: Int = -1
     
-    override init() {  }
-    
     override func forward(sink: Sink) -> Source {
         return { value in
             self.currentIndex += 1

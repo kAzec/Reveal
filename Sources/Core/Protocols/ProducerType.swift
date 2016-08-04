@@ -41,7 +41,7 @@ public extension ProducerType {
         return ScopedDisposable(product)
     }
     
-    @available(*, unavailable, renamed="start", message="This method exists only to satisfy conformance to SourceType protocol.")
+    @available(*, unavailable, renamed="start", message="This method exists only to satisfy conformance to protocol.")
     func subscribe(observer: Product.Element -> Void) -> Disposable {
         return start(observer)
     }
@@ -113,6 +113,16 @@ public extension ProducerType where Product.Element: EventType {
         return start(Product.Element.observer(completion: onCompletion))
     }
     
+    @available(*, unavailable, renamed="startWithNext", message="This method exists only to satisfy conformance to protocol.")
+    func subscribeNext(onNext: Product.Element.Value -> Void) -> Disposable {
+        return startWithNext(onNext)
+    }
+    
+    @available(*, unavailable, renamed="startWithCompleted", message="This method exists only to satisfy conformance to protocol.")
+    func subscribeCompleted(onCompletion: Void -> Void) -> Disposable {
+        return startWithCompleted(onCompletion)
+    }
+
     func suffix(with value: Value) -> Self {
         return Self { observer in
             return self.start { event in
@@ -163,7 +173,7 @@ extension ProducerType {
         }
     }
     
-    init<T>(_ producerHandler: ((T -> Void), CompositeDisposable) -> Void, _ forwarder: IO<T, Product.Element>.Raw) {
+    init<U>(_ producerHandler: ((U -> Void), CompositeDisposable) -> Void, _ forwarder: IO<U, Product.Element>.A) {
         self.init { observer, disposable in
             producerHandler(forwarder(observer), disposable)
         }
@@ -175,7 +185,7 @@ extension ProducerType {
         }
     }
     
-    func startWithProduct(@noescape setup: Product -> Void, producerHandler: ((Product.Element -> Void), CompositeDisposable) -> Void) {
+    func startWithProduct(producerHandler: ((Product.Element -> Void), CompositeDisposable) -> Void, @noescape setup: Product -> Void) {
         let product = Product()
         setup(product)
         

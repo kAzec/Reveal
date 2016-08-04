@@ -9,5 +9,5 @@
 import Foundation
 
 enum IO<I, O> {
-    typealias Raw = (O -> Void) -> (I -> Void)
+    typealias A = (O -> Void) -> (I -> Void)
 }

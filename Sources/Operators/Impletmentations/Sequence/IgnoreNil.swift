@@ -9,8 +9,6 @@
 import Foundation
 
 final class IgnoreNil<Wrapped>: ValueDefaultOperator<Wrapped?, Wrapped> {
-    override init() {  }
-    
     override func forward(sink: Sink) -> Source {
         return { optional in
             if let unwrapped = optional {

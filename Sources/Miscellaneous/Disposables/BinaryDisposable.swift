@@ -23,7 +23,17 @@ public final class BinaryDisposable: Disposable {
     }
     
     public var disposed: Bool {
-        return atomicDisposed.boolValue
+        if atomicDisposed.boolValue {
+            return true
+        }
+        
+        let (left, right) = self.pair!
+        if left.disposed && right.disposed {
+            atomicDisposed.swap(true)
+            return true
+        }
+        
+        return false
     }
     
     init(_ disposable1: Disposable, _ disposable2: Disposable) {
@@ -31,12 +41,11 @@ public final class BinaryDisposable: Disposable {
     }
 
     public func dispose() {
-        if !atomicDisposed.swap(true) {
-            let (left, right) = pair.swap(nil)!
-            
-            left.dispose()
-            right.dispose()
-        }
+        if atomicDisposed.swap(true) { return }
+        
+        let (left, right) = pair.swap(nil)!
+        left.dispose()
+        right.dispose()
     }
 }
 
